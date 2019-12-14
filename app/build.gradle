@@ -79,6 +79,9 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 
+    implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 
