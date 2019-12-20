@@ -1,9 +1,12 @@
 package com.depromeet.finddepro.main;
 
+
 import androidx.test.espresso.idling.CountingIdlingResource;
 
-import com.depromeet.finddepro.data.Notice;
-import com.depromeet.finddepro.data.NoticesRepository;
+import com.depromeet.finddepro.data.Schedule;
+import com.depromeet.finddepro.data.SchedulesRepository;
+import com.depromeet.finddepro.main.schedule.ScheduleContract;
+import com.depromeet.finddepro.main.schedule.SchedulePresenter;
 import com.depromeet.finddepro.util.EspressoIdlingResource;
 
 import org.junit.After;
@@ -28,22 +31,23 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({EspressoIdlingResource.class, CountingIdlingResource.class})
-public class NoticesPresenterTest {
+public class SchedulesPresenterTest {
 
     @Mock
-    private NoticesContract.View view;
+    private ScheduleContract.View view;
 
     @Mock
-    private NoticesRepository repository;
+    private SchedulesRepository repository;
 
-    private NoticesPresenter presenter;
+    private ScheduleContract.Presenter presenter;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         mockStatic(CountingIdlingResource.class, EspressoIdlingResource.class);
-        presenter = new NoticesPresenter(repository, view);
+        presenter = new SchedulePresenter(repository, view);
     }
+
 
     @After
     public void tearDown() throws Exception {
@@ -52,27 +56,28 @@ public class NoticesPresenterTest {
         repository = null;
     }
 
+
     @Test
     public void testStartWhenViewIsNotActiveAndResponseIsSuccessful() {
 
         // Given
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
-            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
-            ArrayList<Notice> notices = new ArrayList<>();
-            notices.add(new Notice(1, "1", "1"));
-            notices.add(new Notice(2, "2", "2"));
-            notices.add(new Notice(3, "3", "3"));
-            notices.add(new Notice(4, "4", "4"));
-            callback.onSuccess(notices);
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            ArrayList<Schedule> schedules = new ArrayList<>();
+            schedules.add(new Schedule(1, 1, "2019-12-20", "1주차 일정입니다."));
+            schedules.add(new Schedule(2, 2, "2019-12-21", "2주차 일정입니다."));
+            schedules.add(new Schedule(3, 3, "2019-12-22", "3주차 일정입니다."));
+            schedules.add(new Schedule(4, 4, "2019-12-23", "4주차 일정입니다."));
+            callback.onSuccess(schedules);
             return null;
-        }).when(repository).getNoticeList(anyInt(), any(NoticesRepository.GetNoticeListCallback.class));
+        }).when(repository).getScheduleList(anyInt(), any(SchedulesRepository.GetScheduleListCallback.class));
 
         // When
         presenter.start();
 
         // Then
-        verify(view, never()).showNotices(any());
+        verify(view, never()).showSchedules(any());
 
     }
 }
