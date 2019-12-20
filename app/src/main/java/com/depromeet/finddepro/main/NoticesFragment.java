@@ -1,5 +1,7 @@
 package com.depromeet.finddepro.main;
 
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 
 import com.depromeet.finddepro.data.Notice;
@@ -43,16 +45,18 @@ public class NoticesFragment extends Fragment implements NoticesContract.View {
 
     @Override
     public void showToast(int resId) {
-
+        // @TODO : (jonghyo) Toast를 한 곳에서 관리하도록 설정할 필요가 있음
+        Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showToast(String msg) {
-
+        // @TODO : (jonghyo) Toast를 한 곳에서 관리하도록 설정할 필요가 있음
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean isActive() {
-        return false;
+        return isAdded();
     }
 }

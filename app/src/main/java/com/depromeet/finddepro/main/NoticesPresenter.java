@@ -11,7 +11,7 @@ public class NoticesPresenter implements NoticesContract.Presenter {
     private final NoticesRepository repository;
     private final NoticesContract.View view;
 
-    public NoticesPresenter(NoticesRepository repository, NoticesContract.View view) {
+    NoticesPresenter(NoticesRepository repository, NoticesContract.View view) {
         this.repository = repository;
         this.view = view;
     }
@@ -32,6 +32,7 @@ public class NoticesPresenter implements NoticesContract.Presenter {
 
             @Override
             public void onFailure(String code, String msg) {
+                EspressoIdlingResource.decrement();
                 if (!view.isActive()) {
                     return;
                 }

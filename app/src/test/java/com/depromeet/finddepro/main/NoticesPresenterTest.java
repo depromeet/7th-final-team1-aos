@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doAnswer;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -74,6 +76,31 @@ public class NoticesPresenterTest {
 
         // Then
         verify(view, never()).showNotices(any());
+
+    }
+
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsSuccessful() {
+
+        ArrayList<Notice> notices = new ArrayList<>();
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            notices.add(new Notice(1, "1", "1"));
+            notices.add(new Notice(2, "2", "2"));
+            notices.add(new Notice(3, "3", "3"));
+            notices.add(new Notice(4, "4", "4"));
+            callback.onSuccess(notices);
+            return null;
+        }).when(repository).getNoticeList(anyInt(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view, times(1)).showNotices(eq(notices));
 
     }
 }

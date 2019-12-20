@@ -1,7 +1,5 @@
 package com.depromeet.finddepro.data;
 
-import com.depromeet.finddepro.data.Notice;
-
 import java.util.ArrayList;
 
 public interface NoticesRepository {
