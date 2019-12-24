@@ -6,7 +6,7 @@ import com.depromeet.finddepro.data.source.FakeNoticesDataSource;
 
 public class Injection {
 
-    public static NoticesRepository provideUsersRepository() {
+    public static NoticesRepository provideNoticesRepository() {
         return Repositories.getNoticesRepoInstance(new FakeNoticesDataSource());
     }
 

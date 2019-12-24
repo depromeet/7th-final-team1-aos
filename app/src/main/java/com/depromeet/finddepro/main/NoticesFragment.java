@@ -1,21 +1,69 @@
 package com.depromeet.finddepro.main;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.depromeet.finddepro.Injection;
+import com.depromeet.finddepro.R;
 import com.depromeet.finddepro.data.Notice;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class NoticesFragment extends Fragment implements NoticesContract.View {
+
+    private final NoticesContract.Presenter presenter;
+    private Unbinder unbinder;
+
+    @BindView(R.id.f_notices_pb)
+    ProgressBar pb;
+    @BindView(R.id.f_notices_rv)
+    RecyclerView rvNotices;
+
     public NoticesFragment() {
+        presenter = new NoticesPresenter(Injection.provideNoticesRepository(), this);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_notices, container, false);
+        unbinder = ButterKnife.bind(this, root);
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.start();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder == null) {
+            return;
+        }
+
+        unbinder.unbind();
+        unbinder = null;
+    }
 
     @Override
     public void setLoadingIndicator(boolean active) {
-
+        pb.setVisibility(active ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -25,7 +73,6 @@ public class NoticesFragment extends Fragment implements NoticesContract.View {
 
     @Override
     public void showNoNotices() {
-
     }
 
     @Override
