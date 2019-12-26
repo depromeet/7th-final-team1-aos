@@ -33,6 +33,7 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
 
             @Override
             public void onFailure(String code, String msg) {
+                EspressoIdlingResource.decrement();
                 if (!view.isActive()) {
                     return;
                 }

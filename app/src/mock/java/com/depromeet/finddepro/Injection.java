@@ -12,8 +12,7 @@ public class Injection {
         return Repositories.getNoticesRepoInstance(new FakeNoticesDataSource());
     }
 
-    //뭔지 잘 모르겠어요..ㅠㅅㅠ
-    public static SchedulesRepository provideUsersRepository2() {
+    public static SchedulesRepository provideSchedulesRepository() {
         return Repositories.getSchedulesRepoInstance(new FakeSchedulesDataSource());
     }
 }

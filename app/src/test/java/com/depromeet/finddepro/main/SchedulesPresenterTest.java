@@ -28,6 +28,8 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doAnswer;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({EspressoIdlingResource.class, CountingIdlingResource.class})
@@ -39,7 +41,7 @@ public class SchedulesPresenterTest {
     @Mock
     private SchedulesRepository repository;
 
-    private ScheduleContract.Presenter presenter;
+    private SchedulePresenter presenter;
 
     @Before
     public void setUp() throws Exception {
@@ -78,6 +80,31 @@ public class SchedulesPresenterTest {
 
         // Then
         verify(view, never()).showSchedules(any());
+
+    }
+
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsSuccessful() {
+        ArrayList<Schedule> schedules = new ArrayList<>();
+
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            schedules.add(new Schedule(1, 1, "2019-12-20", "1주차 일정입니다."));
+            schedules.add(new Schedule(2, 2, "2019-12-21", "2주차 일정입니다."));
+            schedules.add(new Schedule(3, 3, "2019-12-22", "3주차 일정입니다."));
+            schedules.add(new Schedule(4, 4, "2019-12-23", "4주차 일정입니다."));
+            callback.onSuccess(schedules);
+            return null;
+        }).when(repository).getScheduleList(anyInt(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view, times(1)).showSchedules(eq(schedules));
 
     }
 }

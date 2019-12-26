@@ -1,11 +1,11 @@
 package com.depromeet.finddepro.main.schedule;
 
-import androidx.fragment.app.Fragment;
-
 import com.depromeet.finddepro.data.Schedule;
 
 import java.util.ArrayList;
 
+import androidx.fragment.app.Fragment;
+import android.widget.Toast;
 public class ScheduleFragment extends Fragment implements ScheduleContract.View {
     @Override
     public void setLoadingIndicator(boolean active) {
@@ -39,16 +39,18 @@ public class ScheduleFragment extends Fragment implements ScheduleContract.View 
 
     @Override
     public void showToast(int resId) {
-
+        // @TODO : (hee) Toast를 한 곳에서 관리하도록 설정할 필요가 있음
+        Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showToast(String msg) {
-
+        // @TODO : (hee) Toast를 한 곳에서 관리하도록 설정할 필요가 있음
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean isActive() {
-        return false;
+        return isAdded();
     }
 }
