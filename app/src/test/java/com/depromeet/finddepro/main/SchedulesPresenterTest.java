@@ -23,13 +23,13 @@ import java.util.ArrayList;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doAnswer;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({EspressoIdlingResource.class, CountingIdlingResource.class})
@@ -86,8 +86,6 @@ public class SchedulesPresenterTest {
     @Test
     public void testStartWhenViewIsActiveAndResponseIsSuccessful() {
         ArrayList<Schedule> schedules = new ArrayList<>();
-
-
         // Given
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
@@ -107,4 +105,44 @@ public class SchedulesPresenterTest {
         verify(view, times(1)).showSchedules(eq(schedules));
 
     }
+
+    @Test
+    public void testStartWhenViewIsNotActiveAndResponseIsNotSuccessful() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            String errorMsg = "onFailure";
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            callback.onFailure("", errorMsg);
+            return null;
+        }).when(repository).getScheduleList(anyInt(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view, never()).showToast(any());
+
+    }
+
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsNotSuccessful() {
+        String errorMsg = "onFailure";
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            callback.onFailure("", errorMsg);
+            return null;
+        }).when(repository).getScheduleList(anyInt(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view, times(1)).showToast(eq(errorMsg));
+
+    }
+
 }
