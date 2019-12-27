@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 public interface NoticesRepository {
 
-    void getNoticeList(int idx, GetNoticeListCallback callback);
+    public static final int NOTICE_PER_PAGE = 10;
+
+    void getNoticeList(boolean isMoreLoading, GetNoticeListCallback callback);
+
+    void clearCaches();
 
     interface GetNoticeListCallback {
 

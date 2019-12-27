@@ -63,7 +63,7 @@ public class NoticesPresenterTest {
         doAnswer((Answer<Void>) invocation -> {
             NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
             ArrayList<Notice> notices = new ArrayList<>();
-            notices.add(new Notice(1, "1", "1"));
+            notices.add(new Notice(1, "1", "1", 1577327181000L));
             notices.add(new Notice(2, "2", "2"));
             notices.add(new Notice(3, "3", "3"));
             notices.add(new Notice(4, "4", "4"));

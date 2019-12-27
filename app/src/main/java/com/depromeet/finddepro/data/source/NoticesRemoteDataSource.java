@@ -10,7 +10,7 @@ public class NoticesRemoteDataSource implements NoticesDataSource {
     }
 
     @Override
-    public void getNoticeList(int idx, GetNoticeListCallback callback) {
+    public void getNoticeList(int idx, int perPage, GetNoticeListCallback callback) {
         // @TODO : (jonghyo) 실제 api 콜을 해야됨
     }
 }

@@ -1,0 +1,22 @@
+package com.depromeet.finddepro.data;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class NoticeTest {
+
+    @Test
+    public void getCreateAtStr() {
+
+        // Given
+        Notice notice = new Notice(1, "1", "1", 1577327181000L);
+
+        // When
+        String result = notice.getCreateAtStr();
+
+        // Then
+        assertEquals("2019-12-26", result);
+
+    }
+}

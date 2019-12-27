@@ -15,18 +15,23 @@ public class FakeNoticesDataSource implements NoticesDataSource {
 
     public FakeNoticesDataSource() {
         handler = new Handler();
-        initDummyNotices(20);
+        initDummyNotices(25);
     }
 
     private void initDummyNotices(int cnt) {
         fakeNoticeList = new ArrayList<>();
         for (int i = 0; i < cnt; i++) {
-            fakeNoticeList.add(new Notice(i, i + "번째 공지사항", i + "번째 공지사항입니다. 확인!"));
+            fakeNoticeList.add(new Notice(i, i + "번째 공지사항", i + "번째 공지사항입니다. 확인!", 1577327181000L));
         }
     }
 
     @Override
-    public void getNoticeList(int idx, GetNoticeListCallback callback) {
-        handler.postDelayed(() -> callback.onSuccess(fakeNoticeList), DELAY_TIME);
+    public void getNoticeList(int idx, int perPage, GetNoticeListCallback callback) {
+        handler.postDelayed(() -> {
+            int lastIdx = idx + perPage >= fakeNoticeList.size() ?
+                    fakeNoticeList.size() - 1 :
+                    idx + perPage;
+            callback.onSuccess(new ArrayList<>(fakeNoticeList.subList(idx, lastIdx)));
+        }, DELAY_TIME);
     }
 }
