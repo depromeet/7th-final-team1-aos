@@ -19,14 +19,19 @@ public class FakeSchedulesDataSource implements SchedulesDataSource {
 
     private void initDummySchedules(int cnt) {
         fakeScheduleList = new ArrayList<>();
-        for (int i = 0; i < cnt; i++) {
-            fakeScheduleList.add(new Schedule(i, i, "2019-12-20", i + "주차 일정입니다. 확인!"));
+        for (int i = 1; i <= cnt; i++) {
+            fakeScheduleList.add(new Schedule(i, 1577327181000L, i + "일정내용입니다."));
         }
     }
 
     @Override
-    public void getScheduleList(int idx, GetScheduleListCallback callback) {
-        handler.postDelayed(() -> callback.onSuccess(fakeScheduleList), DELAY_TIME);
+    public void getScheduleList(int idx, int perPage, GetScheduleListCallback callback) {
+        handler.postDelayed(() -> {
+            int lastIdx = idx + perPage >= fakeScheduleList.size() ?
+                    fakeScheduleList.size() - 1 :
+                    idx + perPage;
+            callback.onSuccess(new ArrayList<>(fakeScheduleList.subList(idx, lastIdx)));
+        }, DELAY_TIME);
 
     }
 }

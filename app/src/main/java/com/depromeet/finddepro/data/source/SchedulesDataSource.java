@@ -5,7 +5,7 @@ import com.depromeet.finddepro.data.Schedule;
 import java.util.ArrayList;
 
 public interface SchedulesDataSource {
-    void getScheduleList(int idx, GetScheduleListCallback callback);
+    void getScheduleList(int idx, int perPage, GetScheduleListCallback callback);
 
     interface GetScheduleListCallback {
         void onSuccess(ArrayList<Schedule> scheduleList);

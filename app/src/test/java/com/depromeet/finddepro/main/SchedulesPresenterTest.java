@@ -22,7 +22,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.ArrayList;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -67,13 +67,13 @@ public class SchedulesPresenterTest {
         doAnswer((Answer<Void>) invocation -> {
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
             ArrayList<Schedule> schedules = new ArrayList<>();
-            schedules.add(new Schedule(1, 1, "2019-12-20", "1주차 일정입니다."));
-            schedules.add(new Schedule(2, 2, "2019-12-21", "2주차 일정입니다."));
-            schedules.add(new Schedule(3, 3, "2019-12-22", "3주차 일정입니다."));
-            schedules.add(new Schedule(4, 4, "2019-12-23", "4주차 일정입니다."));
+            schedules.add(new Schedule(1, 1577789181000L, "일정입니다."));
+            schedules.add(new Schedule(2, 1577789181000L, "일정입니다."));
+            schedules.add(new Schedule(3, 1577789181000L, "일정입니다."));
+            schedules.add(new Schedule(4, 1577789181000L, "일정입니다."));
             callback.onSuccess(schedules);
             return null;
-        }).when(repository).getScheduleList(anyInt(), any(SchedulesRepository.GetScheduleListCallback.class));
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
 
         // When
         presenter.start();
@@ -90,13 +90,13 @@ public class SchedulesPresenterTest {
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
-            schedules.add(new Schedule(1, 1, "2019-12-20", "1주차 일정입니다."));
-            schedules.add(new Schedule(2, 2, "2019-12-21", "2주차 일정입니다."));
-            schedules.add(new Schedule(3, 3, "2019-12-22", "3주차 일정입니다."));
-            schedules.add(new Schedule(4, 4, "2019-12-23", "4주차 일정입니다."));
+            schedules.add(new Schedule(1, 1577789181000L, "일정입니다."));
+            schedules.add(new Schedule(2, 1577789181000L, "일정입니다."));
+            schedules.add(new Schedule(3, 1577789181000L, "일정입니다."));
+            schedules.add(new Schedule(4, 1577789181000L, "일정입니다."));
             callback.onSuccess(schedules);
             return null;
-        }).when(repository).getScheduleList(anyInt(), any(SchedulesRepository.GetScheduleListCallback.class));
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
 
         // When
         presenter.start();
@@ -116,7 +116,7 @@ public class SchedulesPresenterTest {
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
             callback.onFailure("", errorMsg);
             return null;
-        }).when(repository).getScheduleList(anyInt(), any(SchedulesRepository.GetScheduleListCallback.class));
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
 
         // When
         presenter.start();
@@ -135,7 +135,7 @@ public class SchedulesPresenterTest {
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
             callback.onFailure("", errorMsg);
             return null;
-        }).when(repository).getScheduleList(anyInt(), any(SchedulesRepository.GetScheduleListCallback.class));
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
 
         // When
         presenter.start();

@@ -8,7 +8,9 @@ public interface ScheduleContract {
     interface View {
         void setLoadingIndicator(boolean active);
 
-        void setLoadMore(boolean canLoadMore);
+        void setRefreshing(boolean isRefreshing);
+
+        void setCanLoadMore(boolean canLoadMore);
 
         void showNoSchedules();
 
@@ -23,6 +25,7 @@ public interface ScheduleContract {
         void showToast(String msg);
 
         boolean isActive();
+
     }
 
     interface Presenter {
@@ -31,6 +34,6 @@ public interface ScheduleContract {
 
         void refresh();
 
-        void loadMore(int id);
+        void loadMore();
     }
 }

@@ -5,8 +5,11 @@ import java.util.ArrayList;
 
 public interface SchedulesRepository {
 
-    void getScheduleList(int idx, GetScheduleListCallback callback);
+    public static final int SCEDULE_PER_PAGE = 10;
 
+    void getScheduleList(boolean isMoreLoading, GetScheduleListCallback callback);
+
+    void clearCaches();
     interface GetScheduleListCallback {
 
         void onSuccess(ArrayList<Schedule> scheduleList);

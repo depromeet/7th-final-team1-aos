@@ -11,7 +11,7 @@ public class SchedulesRemoteDataSource implements SchedulesDataSource {
     }
 
     @Override
-    public void getScheduleList(int idx, GetScheduleListCallback callback) {
+    public void getScheduleList(int idx, int perPage, GetScheduleListCallback callback) {
         // @TODO : (hee) 실제 api 콜을 해야됨
     }
 }
