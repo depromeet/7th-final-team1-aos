@@ -23,32 +23,7 @@ public class NoticesPresenter implements NoticesContract.Presenter {
         isLoading = true;
         EspressoIdlingResource.increment();
         view.setLoadingIndicator(true);
-        repository.getNoticeList(false, new NoticesRepository.GetNoticeListCallback() {
-            @Override
-            public void onSuccess(ArrayList<Notice> noticeList) {
-                EspressoIdlingResource.decrement();
-                isLoading = false;
-                if (!view.isActive()) {
-                    return;
-                }
-
-                view.setCanLoadMore(noticeList.size() == NoticesRepository.NOTICE_PER_PAGE);
-                view.setLoadingIndicator(false);
-                view.showNotices(noticeList);
-            }
-
-            @Override
-            public void onFailure(String code, String msg) {
-                EspressoIdlingResource.decrement();
-                isLoading = false;
-                if (!view.isActive()) {
-                    return;
-                }
-
-                view.setLoadingIndicator(false);
-                view.showToast(msg);
-            }
-        });
+        loadNotices(false, false);
     }
 
     @Override
@@ -61,64 +36,68 @@ public class NoticesPresenter implements NoticesContract.Presenter {
 
         EspressoIdlingResource.increment();
         repository.clearCaches();
-        repository.getNoticeList(false, new NoticesRepository.GetNoticeListCallback() {
-            @Override
-            public void onSuccess(ArrayList<Notice> noticeList) {
-                EspressoIdlingResource.decrement();
-                if (!view.isActive()) {
-                    return;
-                }
-
-                view.setCanLoadMore(noticeList.size() == NoticesRepository.NOTICE_PER_PAGE);
-                view.setRefreshing(false);
-                view.showNotices(noticeList);
-            }
-
-            @Override
-            public void onFailure(String code, String msg) {
-                EspressoIdlingResource.decrement();
-                if (!view.isActive()) {
-                    return;
-                }
-
-                view.setRefreshing(false);
-                view.showToast(msg);
-            }
-        });
+        loadNotices(false, true);
     }
 
     @Override
     public void loadMore() {
-        // @TODO : (jonghyo) 이 부분 중복이 많음으로 개선해야 됨
         if (isLoading) {
             return;
         }
 
         isLoading = true;
         EspressoIdlingResource.increment();
-        repository.getNoticeList(true, new NoticesRepository.GetNoticeListCallback() {
+        loadNotices(true, false);
+    }
+
+    private void loadNotices(boolean isMoreLoading, boolean isRefreshing) {
+        repository.getNoticeList(isMoreLoading, new NoticesRepository.GetNoticeListCallback() {
             @Override
             public void onSuccess(ArrayList<Notice> noticeList) {
-                isLoading = false;
                 EspressoIdlingResource.decrement();
+                isLoading = false;
                 if (!view.isActive()) {
                     return;
                 }
 
                 view.setCanLoadMore(noticeList.size() == NoticesRepository.NOTICE_PER_PAGE);
-                view.addNotices(noticeList);
+
+                if (isMoreLoading) {
+                    view.addNotices(noticeList);
+                    return;
+                }
+
+                setIndicatorVisibility(isRefreshing, false);
+
+                if (noticeList.isEmpty()) {
+                    view.showNoNotices();
+                } else {
+                    view.showNotices(noticeList);
+                }
             }
 
             @Override
             public void onFailure(String code, String msg) {
-                isLoading = false;
                 EspressoIdlingResource.decrement();
+                isLoading = false;
                 if (!view.isActive()) {
                     return;
+                }
+
+                if (!isMoreLoading) {
+                    setIndicatorVisibility(isRefreshing, false);
                 }
 
                 view.showToast(msg);
             }
         });
+    }
+
+    private void setIndicatorVisibility(boolean isRefreshing, boolean active) {
+        if (isRefreshing) {
+            view.setRefreshing(active);
+        } else {
+            view.setLoadingIndicator(active);
+        }
     }
 }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -57,7 +58,7 @@ public class NoticesPresenterTest {
     }
 
     @Test
-    public void testStartWhenViewIsNotActiveAndResponseIsSuccessful() {
+    public void testStartWhenViewIsNotActiveAndResponseIsSuccessfulAndNotEmpty() {
 
         // Given
         when(view.isActive()).thenReturn(false);
@@ -81,7 +82,7 @@ public class NoticesPresenterTest {
     }
 
     @Test
-    public void testStartWhenViewIsActiveAndResponseIsSuccessful() {
+    public void testStartWhenViewIsActiveAndResponseIsSuccessfulAndNotEmpty() {
 
         ArrayList<Notice> notices = new ArrayList<>();
 
@@ -104,4 +105,89 @@ public class NoticesPresenterTest {
         verify(view, times(1)).showNotices(eq(notices));
 
     }
+
+    @Test
+    public void testStartWhenViewIsNotActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            ArrayList<Notice> notices = new ArrayList<>();
+            callback.onSuccess(notices);
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view, never()).showNotices(any());
+
+    }
+
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsSuccessfulAndEmpty() {
+
+        ArrayList<Notice> notices = new ArrayList<>();
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onSuccess(notices);
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view, times(1)).showNoNotices();
+
+    }
+
+    @Test
+    public void testStartWhenViewIsNotActiveAndResponseIsFailure() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onFailure("9999", "error");
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view, never()).showNotices(any());
+        verify(view, never()).showToast(anyString());
+
+    }
+
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsFailure() {
+
+        ArrayList<Notice> notices = new ArrayList<>();
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onFailure("9999", "error");
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view, never()).showNotices(any());
+        verify(view, times(1)).showToast(anyString());
+
+    }
+
+
 }
