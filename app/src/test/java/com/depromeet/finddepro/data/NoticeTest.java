@@ -13,7 +13,7 @@ public class NoticeTest {
         Notice notice = new Notice(1, "1", "1", 1577327181000L);
 
         // When
-        String result = notice.getCreateAtStr();
+        String result = notice.getCreatedAtStr();
 
         // Then
         assertEquals("2019-12-26", result);

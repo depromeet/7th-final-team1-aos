@@ -8,13 +8,13 @@ public class Notice {
     private int id;
     private String title;
     private String content;
-    private long createAt;
+    private long createdAt;
 
-    public Notice(int id, String title, String content, long createAt) {
+    public Notice(int id, String title, String content, long createdAt) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.createAt = createAt;
+        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -29,8 +29,8 @@ public class Notice {
         return content;
     }
 
-    public String getCreateAtStr() {
-        Date date = new Date(createAt);
+    public String getCreatedAtStr() {
+        Date date = new Date(createdAt);
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
         return format.format(date);
     }

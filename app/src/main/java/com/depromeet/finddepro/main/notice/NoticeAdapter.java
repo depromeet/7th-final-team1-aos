@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.depromeet.finddepro.R;
@@ -109,7 +108,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void bind(Notice notice) {
             tvTitle.setText(notice.getTitle());
             tvContent.setText(notice.getContent());
-            tvDate.setText(notice.getCreateAtStr());
+            tvDate.setText(notice.getCreatedAtStr());
         }
 
         public Unbinder getUnbinder() {
