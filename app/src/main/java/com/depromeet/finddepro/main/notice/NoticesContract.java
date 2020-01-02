@@ -1,4 +1,4 @@
-package com.depromeet.finddepro.main;
+package com.depromeet.finddepro.main.notice;
 
 import com.depromeet.finddepro.data.Notice;
 

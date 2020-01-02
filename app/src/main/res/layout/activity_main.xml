@@ -9,7 +9,7 @@
     <!-- @TODO : (jonghyo) 테스트용 코드임으로 지워야됨 -->
     <fragment
         android:id="@+id/noticeview"
-        class="com.depromeet.finddepro.main.NoticesFragment"
+        class="com.depromeet.finddepro.main.notice.NoticesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

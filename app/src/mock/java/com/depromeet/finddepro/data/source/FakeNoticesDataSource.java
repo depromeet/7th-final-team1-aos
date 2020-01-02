@@ -28,10 +28,12 @@ public class FakeNoticesDataSource implements NoticesDataSource {
     @Override
     public void getNoticeList(int idx, int perPage, GetNoticeListCallback callback) {
         handler.postDelayed(() -> {
-            int lastIdx = idx + perPage >= fakeNoticeList.size() ?
-                    fakeNoticeList.size() - 1 :
-                    idx + perPage;
-            callback.onSuccess(new ArrayList<>(fakeNoticeList.subList(idx, lastIdx)));
+            int firstIdx = idx == 0 ? 0 : idx + 1;
+
+            int lastIdx = firstIdx + perPage >= fakeNoticeList.size() ?
+                    fakeNoticeList.size() :
+                    firstIdx + perPage;
+            callback.onSuccess(new ArrayList<>(fakeNoticeList.subList(firstIdx, lastIdx)));
         }, DELAY_TIME);
     }
 }

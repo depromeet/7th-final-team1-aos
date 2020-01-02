@@ -1,4 +1,4 @@
-package com.depromeet.finddepro.main;
+package com.depromeet.finddepro.main.notice;
 
 import android.view.LayoutInflater;
 import android.view.View;

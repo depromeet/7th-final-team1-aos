@@ -1,9 +1,11 @@
-package com.depromeet.finddepro.main;
+package com.depromeet.finddepro.main.notice;
 
 import androidx.test.espresso.idling.CountingIdlingResource;
 
 import com.depromeet.finddepro.data.Notice;
 import com.depromeet.finddepro.data.NoticesRepository;
+import com.depromeet.finddepro.main.notice.NoticesContract;
+import com.depromeet.finddepro.main.notice.NoticesPresenter;
 import com.depromeet.finddepro.util.EspressoIdlingResource;
 
 import org.junit.After;
@@ -18,9 +20,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -64,12 +65,12 @@ public class NoticesPresenterTest {
             NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
             ArrayList<Notice> notices = new ArrayList<>();
             notices.add(new Notice(1, "1", "1", 1577327181000L));
-            notices.add(new Notice(2, "2", "2"));
-            notices.add(new Notice(3, "3", "3"));
-            notices.add(new Notice(4, "4", "4"));
+            notices.add(new Notice(2, "2", "2", 1577327181001L));
+            notices.add(new Notice(3, "3", "3", 1577327181002L));
+            notices.add(new Notice(4, "4", "4", 1577327181003L));
             callback.onSuccess(notices);
             return null;
-        }).when(repository).getNoticeList(anyInt(), any(NoticesRepository.GetNoticeListCallback.class));
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
 
         // When
         presenter.start();
@@ -88,13 +89,13 @@ public class NoticesPresenterTest {
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
             NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
-            notices.add(new Notice(1, "1", "1"));
-            notices.add(new Notice(2, "2", "2"));
-            notices.add(new Notice(3, "3", "3"));
-            notices.add(new Notice(4, "4", "4"));
+            notices.add(new Notice(1, "1", "1", 1577327181000L));
+            notices.add(new Notice(2, "2", "2", 1577327181001L));
+            notices.add(new Notice(3, "3", "3", 1577327181002L));
+            notices.add(new Notice(4, "4", "4", 1577327181003L));
             callback.onSuccess(notices);
             return null;
-        }).when(repository).getNoticeList(anyInt(), any(NoticesRepository.GetNoticeListCallback.class));
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
 
         // When
         presenter.start();
