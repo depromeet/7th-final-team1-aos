@@ -57,6 +57,7 @@ public class NoticesPresenterTest {
         repository = null;
     }
 
+    // Start Method Test
     @Test
     public void testStartWhenViewIsNotActiveAndResponseIsSuccessfulAndNotEmpty() {
 
@@ -64,11 +65,7 @@ public class NoticesPresenterTest {
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
             NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
-            ArrayList<Notice> notices = new ArrayList<>();
-            notices.add(new Notice(1, "1", "1", 1577327181000L));
-            notices.add(new Notice(2, "2", "2", 1577327181001L));
-            notices.add(new Notice(3, "3", "3", 1577327181002L));
-            notices.add(new Notice(4, "4", "4", 1577327181003L));
+            ArrayList<Notice> notices = getDummyNoticeList(10);
             callback.onSuccess(notices);
             return null;
         }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
@@ -77,6 +74,10 @@ public class NoticesPresenterTest {
         presenter.start();
 
         // Then
+        verify(view, times(1)).setLoadingIndicator(true);
+
+        verify(view, never()).setCanLoadMore(true);
+        verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).showNotices(any());
 
     }
@@ -84,17 +85,11 @@ public class NoticesPresenterTest {
     @Test
     public void testStartWhenViewIsActiveAndResponseIsSuccessfulAndNotEmpty() {
 
-        ArrayList<Notice> notices = new ArrayList<>();
-
         // Given
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
             NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
-            notices.add(new Notice(1, "1", "1", 1577327181000L));
-            notices.add(new Notice(2, "2", "2", 1577327181001L));
-            notices.add(new Notice(3, "3", "3", 1577327181002L));
-            notices.add(new Notice(4, "4", "4", 1577327181003L));
-            callback.onSuccess(notices);
+            callback.onSuccess(getDummyNoticeList(10));
             return null;
         }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
 
@@ -102,7 +97,11 @@ public class NoticesPresenterTest {
         presenter.start();
 
         // Then
-        verify(view, times(1)).showNotices(eq(notices));
+        verify(view, times(1)).setLoadingIndicator(true);
+
+        verify(view, times(1)).setCanLoadMore(true);
+        verify(view, times(1)).setLoadingIndicator(false);
+        verify(view, times(1)).showNotices(any());
 
     }
 
@@ -113,8 +112,7 @@ public class NoticesPresenterTest {
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
             NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
-            ArrayList<Notice> notices = new ArrayList<>();
-            callback.onSuccess(notices);
+            callback.onSuccess(new ArrayList<>());
             return null;
         }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
 
@@ -122,6 +120,10 @@ public class NoticesPresenterTest {
         presenter.start();
 
         // Then
+        verify(view, times(1)).setLoadingIndicator(true);
+
+        verify(view, never()).setCanLoadMore(false);
+        verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).showNotices(any());
 
     }
@@ -129,13 +131,11 @@ public class NoticesPresenterTest {
     @Test
     public void testStartWhenViewIsActiveAndResponseIsSuccessfulAndEmpty() {
 
-        ArrayList<Notice> notices = new ArrayList<>();
-
         // Given
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
             NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
-            callback.onSuccess(notices);
+            callback.onSuccess(new ArrayList<>());
             return null;
         }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
 
@@ -143,6 +143,8 @@ public class NoticesPresenterTest {
         presenter.start();
 
         // Then
+        verify(view, times(1)).setCanLoadMore(false);
+        verify(view, times(1)).setLoadingIndicator(true);
         verify(view, times(1)).showNoNotices();
 
     }
@@ -162,15 +164,16 @@ public class NoticesPresenterTest {
         presenter.start();
 
         // Then
+        verify(view, times(1)).setLoadingIndicator(true);
+
+        verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).showNotices(any());
-        verify(view, never()).showToast(anyString());
+        verify(view, never()).showToast(eq("error"));
 
     }
 
     @Test
     public void testStartWhenViewIsActiveAndResponseIsFailure() {
-
-        ArrayList<Notice> notices = new ArrayList<>();
 
         // Given
         when(view.isActive()).thenReturn(true);
@@ -184,10 +187,294 @@ public class NoticesPresenterTest {
         presenter.start();
 
         // Then
+        verify(view, times(1)).setLoadingIndicator(true);
+
+        verify(view, times(1)).setLoadingIndicator(false);
         verify(view, never()).showNotices(any());
-        verify(view, times(1)).showToast(anyString());
+        verify(view, times(1)).showToast(eq("error"));
 
     }
 
+    // Refresh Method Test
+    @Test
+    public void testRefreshWhenViewIsNotActiveAndResponseIsSuccessfulAndNotEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onSuccess(getDummyNoticeList(10));
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.refresh();
+
+        // Then
+        verify(repository, times(1)).clearCaches();
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showNotices(any());
+
+    }
+
+    @Test
+    public void testRefreshWhenViewIsActiveAndResponseIsSuccessfulAndNotEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onSuccess(getDummyNoticeList(10));
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.refresh();
+
+        // Then
+        verify(repository, times(1)).clearCaches();
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, times(1)).setRefreshing(false);
+        verify(view, times(1)).showNotices(any());
+
+    }
+
+    @Test
+    public void testRefreshWhenViewIsNotActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            ArrayList<Notice> notices = new ArrayList<>();
+            callback.onSuccess(notices);
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.refresh();
+
+        // Then
+        verify(repository, times(1)).clearCaches();
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showNoNotices();
+
+    }
+
+    @Test
+    public void testRefreshWhenViewIsActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.refresh();
+
+        // Then
+        verify(repository, times(1)).clearCaches();
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, times(1)).setRefreshing(false);
+        verify(view, times(1)).showNoNotices();
+
+    }
+
+    @Test
+    public void testRefreshWhenViewIsNotActiveAndResponseIsFailure() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onFailure("9999", "error");
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.refresh();
+
+        // Then
+        verify(repository, times(1)).clearCaches();
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showToast(eq("error"));
+
+    }
+
+    @Test
+    public void testRefreshWhenViewIsActiveAndResponseIsFailure() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onFailure("9999", "error");
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.refresh();
+
+        // Then
+        verify(repository, times(1)).clearCaches();
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, times(1)).setRefreshing(false);
+        verify(view, times(1)).showToast(eq("error"));
+
+    }
+
+    // loadMore Method Test
+    @Test
+    public void testLoadMoreWhenViewIsNotActiveAndResponseIsSuccessfulAndNotEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onSuccess(getDummyNoticeList(10));
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setCanLoadMore(true);
+        verify(view, never()).addNotices(any());
+
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsActiveAndResponseIsSuccessfulAndNotEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            ArrayList<Notice> notices = getDummyNoticeList(10);
+            callback.onSuccess(notices);
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, times(1)).setCanLoadMore(true);
+        verify(view, times(1)).addNotices(any());
+
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsNotActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setCanLoadMore(false);
+        verify(view, never()).addNotices(any());
+
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, times(1)).setCanLoadMore(false);
+        verify(view, times(1)).addNotices(any());
+
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsNotActiveAndResponseIsFailure() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onFailure("9999", "error");
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).showToast(eq("error"));
+
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsActiveAndResponseIsFailure() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            NoticesRepository.GetNoticeListCallback callback = invocation.getArgumentAt(1, NoticesRepository.GetNoticeListCallback.class);
+            callback.onFailure("9999", "error");
+            return null;
+        }).when(repository).getNoticeList(anyBoolean(), any(NoticesRepository.GetNoticeListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, times(1)).showToast(eq("error"));
+
+    }
+
+    private ArrayList<Notice> getDummyNoticeList(int cnt) {
+        ArrayList<Notice> dummyNoticeList = new ArrayList<>();
+
+        for (int i = 0; i < cnt; i++) {
+            dummyNoticeList.add(new Notice(i, String.valueOf(i), String.valueOf(i), 1577327181000L + i));
+        }
+
+        return dummyNoticeList;
+    }
 
 }
