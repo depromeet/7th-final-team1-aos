@@ -12,6 +12,7 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
     private final SchedulesRepository repository;
     private boolean isLoading;
 
+
     public SchedulePresenter(SchedulesRepository repository, ScheduleContract.View view) {
         this.view = view;
         this.repository = repository;
@@ -94,5 +95,10 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
         } else {
             view.setLoadingIndicator(active);
         }
+    }
+
+    //Todo(@hee: test용, 나중에 지우기!!)
+    public void setIsLoading(boolean isLoading) {
+        this.isLoading = isLoading;
     }
 }

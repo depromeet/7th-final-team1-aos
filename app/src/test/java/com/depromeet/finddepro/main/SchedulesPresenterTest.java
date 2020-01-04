@@ -344,6 +344,33 @@ public class SchedulesPresenterTest {
 
     }
 
+    @Test
+    public void testRefreshWhenViewIsActiveAndResponseIsSuccessfulAndNotEmptyAndLoadingIsTrue() {
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            ArrayList<Schedule> schedules = getDummyScheduleList(10);
+            callback.onSuccess(schedules);
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+
+        // When
+        presenter.setIsLoading(true);   //Todo(@hee : 확인해보기)
+        presenter.refresh();
+
+        // Then
+        verify(repository, never()).clearCaches();
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view).setRefreshing(false);
+        verify(view).showToast("로딩중..잠시 후 다시 시도해주세요.");
+    }
+
+    //LoadMore Method Test
+
+
+
     private ArrayList<Schedule> getDummyScheduleList(int cnt) {
         ArrayList<Schedule> dummyScheduleList = new ArrayList<>();
         for (int i = 0; i < cnt; i++) {
