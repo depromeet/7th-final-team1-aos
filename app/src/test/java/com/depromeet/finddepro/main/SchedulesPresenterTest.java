@@ -59,18 +59,15 @@ public class SchedulesPresenterTest {
     }
 
 
+    //Start Method Test
     @Test
-    public void testStartWhenViewIsNotActiveAndResponseIsSuccessful() {
+    public void testStartWhenViewIsNotActiveAndResponseIsSuccessfulAndNotEmpty() {
 
         // Given
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
-            ArrayList<Schedule> schedules = new ArrayList<>();
-            schedules.add(new Schedule(1, 1577789181000L, "일정입니다."));
-            schedules.add(new Schedule(2, 1577789181000L, "일정입니다."));
-            schedules.add(new Schedule(3, 1577789181000L, "일정입니다."));
-            schedules.add(new Schedule(4, 1577789181000L, "일정입니다."));
+            ArrayList<Schedule> schedules = getDummyScheduleList(10);
             callback.onSuccess(schedules);
             return null;
         }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
@@ -79,21 +76,54 @@ public class SchedulesPresenterTest {
         presenter.start();
 
         // Then
+        verify(view).setLoadingIndicator(true);
+        verify(view, never()).setCanLoadMore(true);
+        verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).showSchedules(any());
+
+        /*
+        TODO("@hee : 주석제거하기");
+        view가 is not active할 때, setLoadingIndicator를 제외하고 나머지는 호출하면 안 됨 (never())
+         */
 
     }
 
     @Test
-    public void testStartWhenViewIsActiveAndResponseIsSuccessful() {
-        ArrayList<Schedule> schedules = new ArrayList<>();
+    public void testStartWhenViewIsNotActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view).setLoadingIndicator(true);
+        verify(view, never()).setCanLoadMore(false);
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).showNoSchedules();
+  /*
+        TODO("@hee : 주석제거하기");
+        view가 is not active할 때, setLoadingIndicator를 제외하고 나머지는 호출하면 안 됨 (never())
+        Empty일 때, showNoSchedules()
+         */
+
+    }
+
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsSuccessfulAndNotEmpty() {
+
         // Given
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
-            schedules.add(new Schedule(1, 1577789181000L, "일정입니다."));
-            schedules.add(new Schedule(2, 1577789181000L, "일정입니다."));
-            schedules.add(new Schedule(3, 1577789181000L, "일정입니다."));
-            schedules.add(new Schedule(4, 1577789181000L, "일정입니다."));
+            ArrayList<Schedule> schedules = getDummyScheduleList(10);
             callback.onSuccess(schedules);
             return null;
         }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
@@ -102,12 +132,35 @@ public class SchedulesPresenterTest {
         presenter.start();
 
         // Then
-        verify(view, times(1)).showSchedules(eq(schedules));
-
+        verify(view).setLoadingIndicator(true);
+        verify(view).setCanLoadMore(true);
+        verify(view).setLoadingIndicator(false);
+        verify(view).showSchedules(any());
     }
 
     @Test
-    public void testStartWhenViewIsNotActiveAndResponseIsNotSuccessful() {
+    public void testStartWhenViewIsActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+        // When
+        presenter.start();
+
+        // Then
+        verify(view).setLoadingIndicator(true);
+        verify(view).setCanLoadMore(false);
+        verify(view).setLoadingIndicator(false);
+        verify(view).showNoSchedules();
+    }
+
+    @Test
+    public void testStartWhenViewIsNotActiveAndResponseIsFailure() {
 
         // Given
         when(view.isActive()).thenReturn(false);
@@ -127,7 +180,7 @@ public class SchedulesPresenterTest {
     }
 
     @Test
-    public void testStartWhenViewIsActiveAndResponseIsNotSuccessful() {
+    public void testStartWhenViewIsActiveAndResponseIsFailure() {
         String errorMsg = "onFailure";
         // Given
         when(view.isActive()).thenReturn(true);
@@ -143,6 +196,16 @@ public class SchedulesPresenterTest {
         // Then
         verify(view, times(1)).showToast(eq(errorMsg));
 
+    }
+
+
+    private ArrayList<Schedule> getDummyScheduleList(int cnt) {
+        ArrayList<Schedule> dummyScheduleList = new ArrayList<>();
+        for (int i = 0; i < cnt; i++) {
+            dummyScheduleList.add(new Schedule(i, 1577789181000L + i, "일정입니다."));
+        }
+
+        return dummyScheduleList;
     }
 
 }
