@@ -368,9 +368,147 @@ public class SchedulesPresenterTest {
     }
 
     //LoadMore Method Test
+    @Test
+    public void testLoadMoreWhenViewIsNotActiveAndResponseIsSuccessfulAndNotEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            ArrayList<Schedule> schedules = getDummyScheduleList(10);
+            callback.onSuccess(schedules);
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setCanLoadMore(true);
+        verify(view, never()).addSchedules(any());
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showSchedules(any());
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsNotActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setCanLoadMore(true);
+        verify(view, never()).addSchedules(any());
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showNoSchedules();
 
 
+    }
 
+    @Test
+    public void testLoadMoreWhenViewIsActiveAndResponseIsSuccessfulAndNotEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            ArrayList<Schedule> schedules = getDummyScheduleList(10);
+            callback.onSuccess(schedules);
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view).setCanLoadMore(true);
+        verify(view).addSchedules(any());
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showSchedules(any());
+
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsActiveAndResponseIsSuccessfulAndEmpty() {
+
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view).setCanLoadMore(false);
+        verify(view).addSchedules(any());
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showNoSchedules();
+
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsNotActiveAndResponseIsFailure() {
+
+        // Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            String errorMsg = "onFailure";
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            callback.onFailure("", errorMsg);
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showToast(eq("onFailure"));
+
+    }
+
+    @Test
+    public void testLoadMoreWhenViewIsActiveAndResponseIsFailure() {
+        String errorMsg = "onFailure";
+        // Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
+            callback.onFailure("", errorMsg);
+            return null;
+        }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
+
+
+        // When
+        presenter.loadMore();
+
+        // Then
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view).showToast(eq("onFailure"));
+
+    }
     private ArrayList<Schedule> getDummyScheduleList(int cnt) {
         ArrayList<Schedule> dummyScheduleList = new ArrayList<>();
         for (int i = 0; i < cnt; i++) {
