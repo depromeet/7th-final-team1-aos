@@ -27,10 +27,12 @@ public class FakeSchedulesDataSource implements SchedulesDataSource {
     @Override
     public void getScheduleList(int idx, int perPage, GetScheduleListCallback callback) {
         handler.postDelayed(() -> {
-            int lastIdx = idx + perPage >= fakeScheduleList.size() ?
-                    fakeScheduleList.size() - 1 :
-                    idx + perPage;
-            callback.onSuccess(new ArrayList<>(fakeScheduleList.subList(idx, lastIdx)));
+            int firstIdx = idx == 0 ? 0 : idx + 1;
+
+            int lastIdx = firstIdx + perPage >= fakeScheduleList.size() ?
+                    fakeScheduleList.size() :
+                    firstIdx + perPage;
+            callback.onSuccess(new ArrayList<>(fakeScheduleList.subList(firstIdx, lastIdx)));
         }, DELAY_TIME);
 
     }

@@ -23,31 +23,7 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
         isLoading = true;
         EspressoIdlingResource.increment();
         view.setLoadingIndicator(true);
-        repository.getScheduleList(false, new SchedulesRepository.GetScheduleListCallback() {
-
-            @Override
-            public void onSuccess(ArrayList<Schedule> scheduleList) {
-                EspressoIdlingResource.decrement();
-                isLoading = false;
-                if (!view.isActive()) {
-                    return;
-                }
-                view.setCanLoadMore(scheduleList.size() == SchedulesRepository.SCEDULE_PER_PAGE);
-                view.setLoadingIndicator(false);
-                view.showSchedules(scheduleList);
-            }
-
-            @Override
-            public void onFailure(String code, String msg) {
-                EspressoIdlingResource.decrement();
-                isLoading = false;
-                if (!view.isActive()) {
-                    return;
-                }
-                view.setLoadingIndicator(false);
-                view.showToast(msg);
-            }
-        });
+        loadSchedules(false, false);
 
     }
 
@@ -60,41 +36,22 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
         }
         EspressoIdlingResource.increment();
         repository.clearCaches();
-        repository.getScheduleList(false, new SchedulesRepository.GetScheduleListCallback() {
-            @Override
-            public void onSuccess(ArrayList<Schedule> scheduleList) {
-                EspressoIdlingResource.decrement();
-                if (!view.isActive()) {
-                    return;
-                }
-                view.setCanLoadMore(scheduleList.size() == SchedulesRepository.SCEDULE_PER_PAGE);
-                view.setLoadingIndicator(false);
-                view.showSchedules(scheduleList);
-            }
-
-            @Override
-            public void onFailure(String code, String msg) {
-                EspressoIdlingResource.decrement();
-                if (!view.isActive()) {
-                    return;
-                }
-
-                view.setRefreshing(false);
-                view.showToast(msg);
-            }
-        });
-
+        loadSchedules(false, true);
     }
 
     @Override
     public void loadMore() {
-        // @TODO : (hee) 이 부분 중복이 많음으로 개선해야 됨
         if (isLoading) {
             return;
         }
         isLoading = true;
         EspressoIdlingResource.increment();
-        repository.getScheduleList(true, new SchedulesRepository.GetScheduleListCallback() {
+        loadSchedules(true, false);
+    }
+
+
+    private void loadSchedules(boolean isMoreLoading, boolean isRefreshing) {
+        repository.getScheduleList(isMoreLoading, new SchedulesRepository.GetScheduleListCallback() {
 
             @Override
             public void onSuccess(ArrayList<Schedule> scheduleList) {
@@ -104,18 +61,38 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
                     return;
                 }
                 view.setCanLoadMore(scheduleList.size() == SchedulesRepository.SCEDULE_PER_PAGE);
-                view.addSchedules(scheduleList);
+                if (isMoreLoading) {
+                    view.addSchedules(scheduleList);
+                    return;
+                }
+
+                setIndicatorVisibility(isRefreshing, false);
+                if (scheduleList.isEmpty())
+                    view.showNoSchedules();
+                else
+                    view.showSchedules(scheduleList);
+
             }
 
             @Override
             public void onFailure(String code, String msg) {
                 isLoading = false;
                 EspressoIdlingResource.decrement();
-                if (!view.isActive()) {
+                if (!view.isActive())
                     return;
-                }
+
+                if (!isMoreLoading)
+                    setIndicatorVisibility(isRefreshing, false);
                 view.showToast(msg);
             }
         });
+    }
+
+    private void setIndicatorVisibility(boolean isRefreshing, boolean active) {
+        if (isRefreshing) {
+            view.setRefreshing(active);
+        } else {
+            view.setLoadingIndicator(active);
+        }
     }
 }
