@@ -81,10 +81,9 @@ public class SchedulesPresenterTest {
         verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).showSchedules(any());
 
-        /*
-        TODO("@hee : 주석제거하기");
-        view가 is not active할 때, setLoadingIndicator를 제외하고 나머지는 호출하면 안 됨 (never())
-         */
+
+        // @TODO(hee : 주석제거하기) view가 is not active할 때, setLoadingIndicator를 제외하고 나머지는 호출하면 안 됨 (never())
+
 
     }
 
@@ -108,11 +107,9 @@ public class SchedulesPresenterTest {
         verify(view, never()).setCanLoadMore(false);
         verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).showNoSchedules();
-  /*
-        TODO("@hee : 주석제거하기");
-        view가 is not active할 때, setLoadingIndicator를 제외하고 나머지는 호출하면 안 됨 (never())
-        Empty일 때, showNoSchedules()
-         */
+
+        // @TODO(hee : 주석제거하기) view가 is not active할 때, setLoadingIndicator를 제외하고 나머지는 호출하면 안 됨 (never()) Empty일 때, showNoSchedules()
+
 
     }
 
@@ -161,11 +158,11 @@ public class SchedulesPresenterTest {
 
     @Test
     public void testStartWhenViewIsNotActiveAndResponseIsFailure() {
+        String errorMsg = "onFailure";
 
         // Given
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
-            String errorMsg = "onFailure";
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
             callback.onFailure("", errorMsg);
             return null;
@@ -175,7 +172,11 @@ public class SchedulesPresenterTest {
         presenter.start();
 
         // Then
-        verify(view, never()).showToast(any());
+        verify(view).setLoadingIndicator(true);
+
+        verify(view, never()).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
+        verify(view, never()).showToast(errorMsg);
 
     }
 
@@ -194,6 +195,10 @@ public class SchedulesPresenterTest {
         presenter.start();
 
         // Then
+        verify(view).setLoadingIndicator(true);
+
+        verify(view).setLoadingIndicator(false);
+        verify(view, never()).setRefreshing(false);
         verify(view, times(1)).showToast(eq(errorMsg));
 
     }
@@ -207,7 +212,7 @@ public class SchedulesPresenterTest {
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
-            ArrayList<Schedule> schedules = getDummyScheduleList(10);
+            ArrayList<Schedule> schedules = getDummyScheduleList(8);
             callback.onSuccess(schedules);
             return null;
         }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
@@ -217,6 +222,8 @@ public class SchedulesPresenterTest {
 
         // Then
         verify(repository).clearCaches();
+
+        verify(view, never()).setCanLoadMore(false);
 
         verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).setRefreshing(false);
@@ -242,6 +249,8 @@ public class SchedulesPresenterTest {
         // Then
         verify(repository).clearCaches();
 
+        verify(view, never()).setCanLoadMore(false);
+
         verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).setRefreshing(false);
         verify(view, never()).showNoSchedules();
@@ -257,7 +266,7 @@ public class SchedulesPresenterTest {
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
-            ArrayList<Schedule> schedules = getDummyScheduleList(10);
+            ArrayList<Schedule> schedules = getDummyScheduleList(8);
             callback.onSuccess(schedules);
             return null;
         }).when(repository).getScheduleList(anyBoolean(), any(SchedulesRepository.GetScheduleListCallback.class));
@@ -268,6 +277,8 @@ public class SchedulesPresenterTest {
 
         // Then
         verify(repository).clearCaches();
+
+        verify(view).setCanLoadMore(false);
 
         verify(view, never()).setLoadingIndicator(false);
         verify(view).setRefreshing(false);
@@ -291,6 +302,8 @@ public class SchedulesPresenterTest {
         // Then
         verify(repository).clearCaches();
 
+        verify(view).setCanLoadMore(false);
+
         verify(view, never()).setLoadingIndicator(false);
         verify(view).setRefreshing(false);
         verify(view).showNoSchedules();
@@ -301,8 +314,9 @@ public class SchedulesPresenterTest {
 
         // Given
         when(view.isActive()).thenReturn(false);
+        String errorMsg = "onFailure";
+
         doAnswer((Answer<Void>) invocation -> {
-            String errorMsg = "onFailure";
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
             callback.onFailure("", errorMsg);
             return null;
@@ -314,9 +328,10 @@ public class SchedulesPresenterTest {
         // Then
         verify(repository).clearCaches();
 
+
         verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).setRefreshing(false);
-        verify(view, never()).showToast(eq("onFailure"));
+        verify(view, never()).showToast(eq(errorMsg));
 
     }
 
@@ -357,7 +372,7 @@ public class SchedulesPresenterTest {
 
 
         // When
-        presenter.setIsLoading(true);   //Todo(@hee : 확인해보기)
+        presenter.setIsLoading(true);   //@Todo(hee : 확인해보기)
         presenter.refresh();
 
         // Then
@@ -471,8 +486,9 @@ public class SchedulesPresenterTest {
 
         // Given
         when(view.isActive()).thenReturn(false);
+        String errorMsg = "onFailure";
+
         doAnswer((Answer<Void>) invocation -> {
-            String errorMsg = "onFailure";
             SchedulesRepository.GetScheduleListCallback callback = invocation.getArgumentAt(1, SchedulesRepository.GetScheduleListCallback.class);
             callback.onFailure("", errorMsg);
             return null;
@@ -484,7 +500,7 @@ public class SchedulesPresenterTest {
         // Then
         verify(view, never()).setLoadingIndicator(false);
         verify(view, never()).setRefreshing(false);
-        verify(view, never()).showToast(eq("onFailure"));
+        verify(view, never()).showToast(eq(errorMsg));
 
     }
 

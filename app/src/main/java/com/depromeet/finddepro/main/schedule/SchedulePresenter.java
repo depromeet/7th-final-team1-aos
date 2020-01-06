@@ -97,7 +97,7 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
         }
     }
 
-    //Todo(@hee: test용, 나중에 지우기!!)
+    //@Todo(hee: test용, 나중에 지우기!!)
     public void setIsLoading(boolean isLoading) {
         this.isLoading = isLoading;
     }
