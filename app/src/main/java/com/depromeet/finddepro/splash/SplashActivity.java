@@ -1,9 +1,9 @@
 package com.depromeet.finddepro.splash;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.depromeet.finddepro.R;
 import com.depromeet.finddepro.main.MainActivity;
@@ -17,6 +17,5 @@ public class SplashActivity extends AppCompatActivity {
 
 		startActivity(new Intent(this, MainActivity.class));
 		finish();
-
 	}
 }

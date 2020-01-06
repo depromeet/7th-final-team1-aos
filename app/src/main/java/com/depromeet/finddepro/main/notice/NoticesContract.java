@@ -1,4 +1,4 @@
-package com.depromeet.finddepro.main;
+package com.depromeet.finddepro.main.notice;
 
 import com.depromeet.finddepro.data.Notice;
 
@@ -10,7 +10,9 @@ public interface NoticesContract {
 
         void setLoadingIndicator(boolean active);
 
-        void setLoadMore(boolean canLoadMore);
+        void setRefreshing(boolean isRefreshing);
+
+        void setCanLoadMore(boolean canLoadMore);
 
         void showNoNotices();
 
@@ -34,7 +36,7 @@ public interface NoticesContract {
 
         void refresh();
 
-        void loadMore(int id);
+        void loadMore();
 
     }
 

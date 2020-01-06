@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface NoticesDataSource {
 
-    void getNoticeList(int idx, GetNoticeListCallback callback);
+    void getNoticeList(int idx, int perPage, GetNoticeListCallback callback);
 
     interface GetNoticeListCallback {
 

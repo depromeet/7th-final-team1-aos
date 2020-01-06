@@ -4,10 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.depromeet.finddepro.main.MainActivity">
-    <!-- @TODO : (hee) 테스트용 코드임으로 지워야됨 -->
+
+    <!-- @TODO : (jonghyo) 여기에 탭 구현해야 됨 -->
+    <!-- @TODO : (jonghyo) 테스트용 코드임으로 지워야됨 -->
     <fragment
-        android:id="@+id/scheduleview"
-        class="com.depromeet.finddepro.main.schedule.ScheduleFragment"
+        android:id="@+id/noticeview"
+        class="com.depromeet.finddepro.main.notice.NoticesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

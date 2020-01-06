@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="80dp">
+
+    <TextView
+        android:id="@+id/item_notice_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/item_notice_tv_date"
+        tools:text="제목"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/item_notice_tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        tools:text="2020-01-01"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/item_notice_tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_notice_tv_title"
+        tools:text="내용 1234\n040203kd\n0230920932" />
+
+</RelativeLayout>
