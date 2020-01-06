@@ -6,6 +6,7 @@ public class NoticesRemoteDataSource implements NoticesDataSource {
     private final NoticeApi api;
 
     public NoticesRemoteDataSource(NoticeApi api) {
+
         this.api = api;
     }
 
