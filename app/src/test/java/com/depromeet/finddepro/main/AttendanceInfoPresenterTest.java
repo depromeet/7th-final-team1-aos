@@ -1,0 +1,75 @@
+package com.depromeet.finddepro.main;
+
+
+import androidx.test.espresso.idling.CountingIdlingResource;
+
+import com.depromeet.finddepro.data.AttendanceInfo;
+import com.depromeet.finddepro.data.AttendanceInfoRepository;
+import com.depromeet.finddepro.main.attendance.AttendanceInfoContract;
+import com.depromeet.finddepro.main.attendance.AttendanceInfoPresenter;
+import com.depromeet.finddepro.util.EspressoIdlingResource;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.stubbing.Answer;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.doAnswer;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({EspressoIdlingResource.class, CountingIdlingResource.class})
+public class AttendanceInfoPresenterTest {
+    @Mock
+    private AttendanceInfoContract.View view;
+
+    @Mock
+    private AttendanceInfoRepository repository;
+
+    private AttendanceInfoPresenter presenter;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        mockStatic(CountingIdlingResource.class, EspressoIdlingResource.class);
+        presenter = new AttendanceInfoPresenter(repository, view);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        presenter = null;
+        view = null;
+        repository = null;
+    }
+
+
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsSuccessfulAndNotNull() {
+
+        //Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            AttendanceInfo attendanceInfo = new AttendanceInfo(10, 7, 0);
+            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            callback.onSuccess(attendanceInfo);
+            return null;
+        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+
+        //when
+        presenter.start();
+
+        //Then
+
+        verify(view).showAttendanceInfo(any());
+
+    }
+
+}

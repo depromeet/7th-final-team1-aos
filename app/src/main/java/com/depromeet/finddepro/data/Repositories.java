@@ -3,6 +3,7 @@ package com.depromeet.finddepro.data;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import com.depromeet.finddepro.data.source.AttendanceInfoDataSource;
 import com.depromeet.finddepro.data.source.NoticesDataSource;
 import com.depromeet.finddepro.data.source.SchedulesDataSource;
 
@@ -16,6 +17,7 @@ public class Repositories {
 
     private static NoticesRepository noticesRepository = null;
     private static SchedulesRepository schedulesRepository = null;
+    private static AttendanceInfoRepository attendanceInfoRepository = null;
 
 
     public static NoticesRepository getNoticesRepoInstance(@NonNull NoticesDataSource noticesDataSource) {
@@ -48,4 +50,19 @@ public class Repositories {
         return schedulesRepository;
     }
 
+
+    public static AttendanceInfoRepository getAttendanceInfoInstance(@NonNull AttendanceInfoDataSource attendanceInfoDataSource) {
+        checkNotNull(attendanceInfoDataSource);
+
+        if (attendanceInfoRepository == null) {
+            attendanceInfoRepository = new InMemoryAttendanceInfoRepository(attendanceInfoDataSource);
+        }
+        return attendanceInfoRepository;
+    }
+
+
+    @VisibleForTesting
+    public static AttendanceInfoRepository getAttendanceInfoInstance() {
+        return attendanceInfoRepository;
+    }
 }
