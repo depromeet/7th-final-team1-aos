@@ -4,11 +4,29 @@ public class AttendanceInfo {
     private int total;
     private int attendance;
     private int absence;
+    private transient int remainingAttendance;
 
     public AttendanceInfo(int total, int attendance, int absence) {
         this.total = total;
         this.attendance = attendance;
         this.absence = absence;
+        this.remainingAttendance = total - attendance - absence;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public int getAttendance() {
+        return attendance;
+    }
+
+    public int getAbsence() {
+        return absence;
+    }
+
+    public int getRemainingAttendance() {
+        return remainingAttendance;
     }
 
     public String getTotalStr() {
@@ -24,7 +42,7 @@ public class AttendanceInfo {
     }
 
     public String getRemainingAttendanceStr() {
-        int remaining = total - attendance - absence;
-        return String.valueOf(remaining);
+        return String.valueOf(remainingAttendance);
     }
+
 }

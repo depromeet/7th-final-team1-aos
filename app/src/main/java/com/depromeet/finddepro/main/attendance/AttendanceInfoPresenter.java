@@ -21,12 +21,12 @@ public class AttendanceInfoPresenter implements AttendanceInfoContract.Presenter
         loadAttendanceInfo();
     }
 
+
     @Override
     public void update() {
         EspressoIdlingResource.increment();
         repository.clearCaches();
         loadAttendanceInfo();
-
     }
 
     public void loadAttendanceInfo() {
@@ -38,9 +38,12 @@ public class AttendanceInfoPresenter implements AttendanceInfoContract.Presenter
                     return;
                 if (attendanceInfo == null)
                     view.showNoAttendanceInfo();
-                else
-                    view.showAttendanceInfo(attendanceInfo);
-
+                else {
+                    if (checkRemaining(attendanceInfo))  //@todo(hee: remaining 출석일이 음수일 경우가 있을가?)
+                        view.showAttendanceInfo(attendanceInfo);
+                    else
+                        view.showNoAttendanceInfo();
+                }
             }
 
             @Override
@@ -54,5 +57,11 @@ public class AttendanceInfoPresenter implements AttendanceInfoContract.Presenter
 
             }
         });
+    }
+
+    private boolean checkRemaining(AttendanceInfo attendanceInfo) {
+        if (attendanceInfo.getRemainingAttendance() < 0)
+            return false;
+        return true;
     }
 }

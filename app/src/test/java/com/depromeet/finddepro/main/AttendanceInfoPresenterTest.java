@@ -20,6 +20,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doAnswer;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -67,9 +69,110 @@ public class AttendanceInfoPresenterTest {
         presenter.start();
 
         //Then
-
         verify(view).showAttendanceInfo(any());
 
     }
 
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsSuccessfulAndNull() {
+
+        //Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            callback.onSuccess(null);
+            return null;
+        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+
+        //when
+        presenter.start();
+
+        //Then
+        verify(view, never()).showAttendanceInfo(any());
+        verify(view).showNoAttendanceInfo();
+    }
+
+    @Test
+    public void testStartWhenViewIsActiveAndResponseIsFailure() {
+        String errorMsg = "onFailure";
+
+        //Given
+        when(view.isActive()).thenReturn(true);
+        doAnswer((Answer<Void>) invocation -> {
+            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            callback.onFailure("", errorMsg);
+            return null;
+        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+
+        //when
+        presenter.start();
+
+        //Then
+        verify(view, never()).showAttendanceInfo(any());
+        verify(view, never()).showNoAttendanceInfo();
+        verify(view).showToast(eq(errorMsg));
+
+    }
+
+    @Test
+    public void testStartWhenViewIsNotActiveAndResponseIsSuccessfulAndNotNull() {
+
+        //Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            AttendanceInfo attendanceInfo = new AttendanceInfo(10, 7, 0);
+            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            callback.onSuccess(attendanceInfo);
+            return null;
+        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+
+        //when
+        presenter.start();
+
+        //Then
+        verify(view, never()).showAttendanceInfo(any());
+
+    }
+
+    @Test
+    public void testStartWhenViewIsNotActiveAndResponseIsSuccessfulAndNull() {
+
+        //Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            callback.onSuccess(null);
+            return null;
+        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+
+        //when
+        presenter.start();
+
+        //Then
+        verify(view, never()).showAttendanceInfo(any());
+        verify(view, never()).showNoAttendanceInfo();
+
+    }
+
+    @Test
+    public void testStartWhenViewIsNotActiveAndResponseIsFailure() {
+        String errorMsg = "onFailure";
+
+        //Given
+        when(view.isActive()).thenReturn(false);
+        doAnswer((Answer<Void>) invocation -> {
+            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            callback.onFailure("", errorMsg);
+            return null;
+        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+
+        //when
+        presenter.start();
+
+        //Then
+        verify(view, never()).showAttendanceInfo(any());
+        verify(view, never()).showNoAttendanceInfo();
+        verify(view, never()).showToast(errorMsg);
+
+    }
 }
