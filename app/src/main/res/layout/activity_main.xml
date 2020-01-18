@@ -1,16 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.depromeet.finddepro.main.MainActivity">
 
-    <!-- @TODO : (jonghyo) 여기에 탭 구현해야 됨 -->
-    <!-- @TODO : (jonghyo) 테스트용 코드임으로 지워야됨 -->
-    <fragment
-        android:id="@+id/noticeview"
-        class="com.depromeet.finddepro.main.notice.NoticesFragment"
+
+    <TextView
+        android:id="@+id/mainTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- @TODO : (hee) 테스트용 코드임으로 지워야됨 -->
+    <!--    <fragment-->
+    <!--        android:id="@+id/attendancView"-->
+    <!--        class="com.depromeet.finddepro.main.attendance.AttendanceInfoFragment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/mainTitle"-->
+    <!--        tools:layout_editor_absoluteX="0dp" />-->
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="@+id/view_pager"
+        app:tabIndicatorHeight="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,7 @@ package com.depromeet.finddepro.data;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class NoticeTest {
 
@@ -16,7 +16,7 @@ public class NoticeTest {
         String result = notice.getCreatedAtStr();
 
         // Then
-        assertEquals("2019-12-26", result);
+        assertEquals("2019/12/26", result);
 
     }
 }
