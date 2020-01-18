@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">FindDepro</string>
+
+    <!--홈-->
+    <string name="homeTitle">홈</string>
+
+
+    <!--출석-->
+    <string name="attendanceTitle">출석</string>
+    <string name="totalStr">전체 출석수</string>
+    <string name="attendanceStr">현재 출석 횟수</string>
+    <string name="absenceStr">결석 횟수</string>
+    <string name="remainingStr">앞으로 남은 출석일</string>
+    <string name="checkAttendanceStr">출석 체크</string>
+
+    <!--투표-->
+    <string name="voteTitle">투표</string>
+
+    <!--게시판-->
+    <string name="builtinBoardTitle">게시판</string>
+
+
 </resources>
