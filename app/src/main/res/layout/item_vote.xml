@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="33dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="11.4dp">
+
+        <include
+            android:id="@+id/item_vote_layout_generation_info"
+            layout="@layout/content_vote_generation_info" />
+
+        <include
+            android:id="@+id/item_vote_layout_choices"
+            layout="@layout/content_vote_choices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- @TODO : (jonghyo) 좋아요 버튼과 댓글 버튼 구현 -->
+
+
+    </LinearLayout>
+
+</LinearLayout>

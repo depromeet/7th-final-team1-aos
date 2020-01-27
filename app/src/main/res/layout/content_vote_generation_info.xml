@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/item_vote_iv_creator_profile"
+        android:layout_width="39dp"
+        android:layout_height="39dp" />
+
+    <TextView
+        android:id="@+id/item_vote_tv_creator_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/item_vote_iv_creator_profile"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/item_vote_iv_creator_profile"
+        tools:ignore="RtlHardcoded"
+        tools:text="관리자" />
+
+    <TextView
+        android:id="@+id/item_vote_tv_created_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/item_vote_iv_creator_profile"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/item_vote_iv_creator_profile"
+        tools:ignore="RtlHardcoded"
+        tools:text="2020년 12월 31일 17:20" />
+
+    <ImageView
+        android:id="@+id/item_vote_iv_person"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/item_vote_iv_creator_profile"
+        android:layout_toLeftOf="@+id/item_vote_tv_total_person_cnt"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/item_vote_tv_total_person_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/item_vote_iv_creator_profile"
+        android:layout_alignParentRight="true"
+        tools:ignore="RtlHardcoded"
+        tools:text="82" />
+
+</RelativeLayout>
