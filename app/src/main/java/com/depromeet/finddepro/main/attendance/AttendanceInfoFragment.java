@@ -29,6 +29,8 @@ public class AttendanceInfoFragment extends Fragment implements AttendanceInfoCo
     TextView absence;
     @BindView(R.id.remaining)
     TextView remaining;
+    @BindView(R.id.checkAttendanceBtn)
+    TextView checkAttendanceBtn;
     private Unbinder unbinder;
 
     public AttendanceInfoFragment() {
@@ -42,6 +44,10 @@ public class AttendanceInfoFragment extends Fragment implements AttendanceInfoCo
 
         View root = inflater.inflate(R.layout.fragment_attendanceinfo, container, false);
         unbinder = ButterKnife.bind(this, root);
+
+        checkAttendanceBtn.setOnClickListener(v -> {
+            //intent로 출석체크하는 곳으로 전환
+        });
 
         return root;
     }

@@ -29,7 +29,7 @@ public class AttendanceInfoPresenter implements AttendanceInfoContract.Presenter
         loadAttendanceInfo();
     }
 
-    public void loadAttendanceInfo() {
+    private void loadAttendanceInfo() {
         repository.getAttendanceInfo(new AttendanceInfoRepository.GetAttendanceInfoCallback() {
             @Override
             public void onSuccess(AttendanceInfo attendanceInfo) {
@@ -39,7 +39,7 @@ public class AttendanceInfoPresenter implements AttendanceInfoContract.Presenter
                 if (attendanceInfo == null)
                     view.showNoAttendanceInfo();
                 else {
-                    if (checkRemaining(attendanceInfo))  //@todo(hee: remaining 출석일이 음수일 경우가 있을가?)
+                    if (checkRemaining(attendanceInfo))
                         view.showAttendanceInfo(attendanceInfo);
                     else
                         view.showNoAttendanceInfo();
@@ -60,8 +60,6 @@ public class AttendanceInfoPresenter implements AttendanceInfoContract.Presenter
     }
 
     private boolean checkRemaining(AttendanceInfo attendanceInfo) {
-        if (attendanceInfo.getRemainingAttendance() < 0)
-            return false;
-        return true;
+        return attendanceInfo.getRemainingAttendance() >= 0;
     }
 }

@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 public class TabPagerAdapter extends FragmentPagerAdapter {
 
     //@TODO (hee : fragments 구현 후 수정하기, 현재 테스트 용
-    private static final int PAGE_NUMBER = 2;
+    private static final int PAGE_NUMBER = 3;
 
     TabPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -23,7 +23,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
             case 0: {
                 return Fragments.getNoticesFragment();
             }
-            case 1:
+            case 1: {
+                return Fragments.getAttendanceInfoFragment();
+            }
+            case 2:
             default: {
                 return Fragments.getScheduleFragment();
 
