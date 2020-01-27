@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.depromeet.finddepro.main.attendance.AttendanceInfoFragment;
 
 public class TabPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int PAGE_NUMBER = 4;
+    //@TODO (hee : fragments 구현 후 수정하기, 현재 테스트 용
+    private static final int PAGE_NUMBER = 2;
 
     TabPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -21,23 +21,14 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0: {
-                AttendanceInfoFragment attendanceInfoFragment = new AttendanceInfoFragment();
-                //
-                return attendanceInfoFragment;
+                return Fragments.getNoticesFragment();
             }
-            case 1: {
-                AttendanceInfoFragment attendanceInfoFragment = new AttendanceInfoFragment();
-                return attendanceInfoFragment;
-            }
-            case 2: {
-                AttendanceInfoFragment attendanceInfoFragment = new AttendanceInfoFragment();
-                return attendanceInfoFragment;
-            }
-            case 3:
+            case 1:
             default: {
-                AttendanceInfoFragment attendanceInfoFragment = new AttendanceInfoFragment();
-                return attendanceInfoFragment;
+                return Fragments.getScheduleFragment();
+
             }
+
         }
     }
 

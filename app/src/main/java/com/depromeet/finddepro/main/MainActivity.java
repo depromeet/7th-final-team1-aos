@@ -14,9 +14,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.tabMenu)
+    @BindView(R.id.bottomMenu)
     TabLayout tab;
-    @BindView(R.id.view_pager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.mainTitle)
     TextView title;
