@@ -3,6 +3,7 @@ package com.depromeet.finddepro.main.vote.custom;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -44,12 +45,11 @@ public class ChoiceView extends FrameLayout {
 	}
 
 	private void initViews() {
-		View view = inflate(getContext(), R.layout.layout_choice, this);
+		View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_choice, this, true);
 		mTvName = view.findViewById(R.id.layout_choice_tv_name);
 		mTvPersonCnt = view.findViewById(R.id.layout_choice_tv_person_cnt);
 		mIvChecked = view.findViewById(R.id.layout_choice_cb_checked);
 		mLlPersonInfoContainer = view.findViewById(R.id.layout_choice_ll_person_info);
-		addView(view);
 	}
 
 	public void bind(Choice choice, ChoiceListener listener) {

@@ -9,6 +9,14 @@ public class Choice {
 	private Boolean checked;
 	private Integer personCnt;
 
+	public Choice(String id, String name, Boolean checked, Integer personCnt, ArrayList<User> selectedUserList) {
+		this.id = id;
+		this.name = name;
+		this.checked = checked;
+		this.personCnt = personCnt;
+		this.selectedUserList = selectedUserList;
+	}
+
 	private ArrayList<User> selectedUserList;
 
 	public String getId() {
