@@ -5,6 +5,7 @@ import androidx.annotation.VisibleForTesting;
 
 import com.depromeet.finddepro.data.source.NoticesDataSource;
 import com.depromeet.finddepro.data.source.SchedulesDataSource;
+import com.depromeet.finddepro.data.source.VotesDataSource;
 
 import static androidx.core.util.Preconditions.checkNotNull;
 
@@ -16,7 +17,7 @@ public class Repositories {
 
     private static NoticesRepository noticesRepository = null;
     private static SchedulesRepository schedulesRepository = null;
-
+    private static VotesRepository votesRepository = null;
 
     public static NoticesRepository getNoticesRepoInstance(@NonNull NoticesDataSource noticesDataSource) {
         checkNotNull(noticesDataSource);
@@ -46,6 +47,16 @@ public class Repositories {
     @VisibleForTesting
     public static SchedulesRepository getSchedulesRepoInstance() {
         return schedulesRepository;
+    }
+
+    public static VotesRepository getVotesRepoInstance(@NonNull VotesDataSource votesDataSource) {
+        checkNotNull(votesDataSource);
+
+        if (votesRepository == null) {
+            votesRepository = new InMemoryVotesRepository(votesDataSource);
+        }
+
+        return votesRepository;
     }
 
 }
