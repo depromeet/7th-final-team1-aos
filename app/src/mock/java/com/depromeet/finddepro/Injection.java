@@ -1,10 +1,10 @@
 package com.depromeet.finddepro;
 
-import com.depromeet.finddepro.data.AttendanceInfoRepository;
+import com.depromeet.finddepro.data.AttendanceRepository;
 import com.depromeet.finddepro.data.NoticesRepository;
 import com.depromeet.finddepro.data.Repositories;
 import com.depromeet.finddepro.data.SchedulesRepository;
-import com.depromeet.finddepro.data.source.FakeAttendanceInfoDataSource;
+import com.depromeet.finddepro.data.source.FakeAttendanceDataSource;
 import com.depromeet.finddepro.data.source.FakeNoticesDataSource;
 import com.depromeet.finddepro.data.source.FakeSchedulesDataSource;
 
@@ -18,8 +18,10 @@ public class Injection {
         return Repositories.getSchedulesRepoInstance(new FakeSchedulesDataSource());
     }
 
-    public static AttendanceInfoRepository provideAttendanceInfoRepository() {
-        return Repositories.getAttendanceInfoInstance(new FakeAttendanceInfoDataSource());
+    public static AttendanceRepository provideAttendanceInfoRepository() {
+        return Repositories.getAttendanceInfoInstance(new FakeAttendanceDataSource());
 
     }
+
+
 }

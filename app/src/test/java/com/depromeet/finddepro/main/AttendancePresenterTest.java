@@ -4,9 +4,9 @@ package com.depromeet.finddepro.main;
 import androidx.test.espresso.idling.CountingIdlingResource;
 
 import com.depromeet.finddepro.data.AttendanceInfo;
-import com.depromeet.finddepro.data.AttendanceInfoRepository;
-import com.depromeet.finddepro.main.attendance.AttendanceInfoContract;
-import com.depromeet.finddepro.main.attendance.AttendanceInfoPresenter;
+import com.depromeet.finddepro.data.AttendanceRepository;
+import com.depromeet.finddepro.main.attendance.AttendanceContract;
+import com.depromeet.finddepro.main.attendance.AttendancePresenter;
 import com.depromeet.finddepro.util.EspressoIdlingResource;
 
 import org.junit.After;
@@ -29,20 +29,20 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({EspressoIdlingResource.class, CountingIdlingResource.class})
-public class AttendanceInfoPresenterTest {
+public class AttendancePresenterTest {
     @Mock
-    private AttendanceInfoContract.View view;
+    private AttendanceContract.View view;
 
     @Mock
-    private AttendanceInfoRepository repository;
+    private AttendanceRepository repository;
 
-    private AttendanceInfoPresenter presenter;
+    private AttendancePresenter presenter;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         mockStatic(CountingIdlingResource.class, EspressoIdlingResource.class);
-        presenter = new AttendanceInfoPresenter(repository, view);
+        presenter = new AttendancePresenter(repository, view);
     }
 
     @After
@@ -60,10 +60,10 @@ public class AttendanceInfoPresenterTest {
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
             AttendanceInfo attendanceInfo = new AttendanceInfo(10, 7, 0);
-            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            AttendanceRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceRepository.GetAttendanceInfoCallback.class);
             callback.onSuccess(attendanceInfo);
             return null;
-        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+        }).when(repository).getAttendanceInfo(any(AttendanceRepository.GetAttendanceInfoCallback.class));
 
         //when
         presenter.start();
@@ -79,10 +79,10 @@ public class AttendanceInfoPresenterTest {
         //Given
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
-            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            AttendanceRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceRepository.GetAttendanceInfoCallback.class);
             callback.onSuccess(null);
             return null;
-        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+        }).when(repository).getAttendanceInfo(any(AttendanceRepository.GetAttendanceInfoCallback.class));
 
         //when
         presenter.start();
@@ -99,10 +99,10 @@ public class AttendanceInfoPresenterTest {
         //Given
         when(view.isActive()).thenReturn(true);
         doAnswer((Answer<Void>) invocation -> {
-            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            AttendanceRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceRepository.GetAttendanceInfoCallback.class);
             callback.onFailure("", errorMsg);
             return null;
-        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+        }).when(repository).getAttendanceInfo(any(AttendanceRepository.GetAttendanceInfoCallback.class));
 
         //when
         presenter.start();
@@ -121,10 +121,10 @@ public class AttendanceInfoPresenterTest {
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
             AttendanceInfo attendanceInfo = new AttendanceInfo(10, 7, 0);
-            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            AttendanceRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceRepository.GetAttendanceInfoCallback.class);
             callback.onSuccess(attendanceInfo);
             return null;
-        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+        }).when(repository).getAttendanceInfo(any(AttendanceRepository.GetAttendanceInfoCallback.class));
 
         //when
         presenter.start();
@@ -140,10 +140,10 @@ public class AttendanceInfoPresenterTest {
         //Given
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
-            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            AttendanceRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceRepository.GetAttendanceInfoCallback.class);
             callback.onSuccess(null);
             return null;
-        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+        }).when(repository).getAttendanceInfo(any(AttendanceRepository.GetAttendanceInfoCallback.class));
 
         //when
         presenter.start();
@@ -161,10 +161,10 @@ public class AttendanceInfoPresenterTest {
         //Given
         when(view.isActive()).thenReturn(false);
         doAnswer((Answer<Void>) invocation -> {
-            AttendanceInfoRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceInfoRepository.GetAttendanceInfoCallback.class);
+            AttendanceRepository.GetAttendanceInfoCallback callback = invocation.getArgumentAt(0, AttendanceRepository.GetAttendanceInfoCallback.class);
             callback.onFailure("", errorMsg);
             return null;
-        }).when(repository).getAttendanceInfo(any(AttendanceInfoRepository.GetAttendanceInfoCallback.class));
+        }).when(repository).getAttendanceInfo(any(AttendanceRepository.GetAttendanceInfoCallback.class));
 
         //when
         presenter.start();

@@ -24,7 +24,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 return Fragments.getNoticesFragment();
             }
             case 1: {
-                return Fragments.getAttendanceInfoFragment();
+                return Fragments.getAttendanceFragment();
             }
             case 2:
             default: {
