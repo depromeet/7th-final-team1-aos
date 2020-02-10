@@ -10,4 +10,18 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="H1CenterGray900">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineSpacingExtra">0sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="CaptionCenterGray600">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">0sp</item>
+        <item name="android:textColor">@color/blue_grey</item>
+    </style>
 </resources>

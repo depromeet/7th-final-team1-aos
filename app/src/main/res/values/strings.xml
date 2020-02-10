@@ -11,7 +11,7 @@
     <string name="attendanceStr">현재 출석 횟수</string>
     <string name="absenceStr">결석 횟수</string>
     <string name="remainingStr">앞으로 남은 출석일</string>
-    <string name="checkAttendanceStr">출석 체크</string>
+    <string name="checkAttendanceStr">출석확인</string>
 
     <!--투표-->
     <string name="voteTitle">투표</string>

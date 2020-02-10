@@ -13,7 +13,6 @@ public class AttendancePresenter implements AttendanceContract.Presenter {
     static String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private final AttendanceRepository repository;
     private final AttendanceContract.View view;
-    private double latitude, longitude;
     private PermissionsHandler permissionsHandler;
     private LocationHandler locationHandler;
 
@@ -74,9 +73,7 @@ public class AttendancePresenter implements AttendanceContract.Presenter {
     public void checkAttendance(String id) {
         EspressoIdlingResource.increment();
 
-        setLocationInfo();
-
-        repository.getCheckedAttendanceResult(latitude, longitude, id, new AttendanceRepository.GetCheckedAttendanceCallback() {
+        repository.getCheckedAttendanceResult(locationHandler.getLatitude(), locationHandler.getLongitude(), id, new AttendanceRepository.GetCheckedAttendanceCallback() {
             @Override
             public void onSuccess(String result) {
                 EspressoIdlingResource.decrement();
@@ -107,16 +104,9 @@ public class AttendancePresenter implements AttendanceContract.Presenter {
         });
     }
 
-    private void setLocationInfo() {
-        latitude = locationHandler.getLatitude();
-        longitude = locationHandler.getLongitude();
-    }
-
     @Override
     public void requestQRScan() {
-        setLocationInfo();
-
-        if (latitude != 0.0 && longitude != 0.0)  //@todo (hee : if 조건 바꾸기)
+        if (locationHandler.getLongitude() != 0.0 && locationHandler.getLatitude() != 0.0)  //@todo (hee : if 조건 바꾸기)
             view.startQRScan();
     }
 
@@ -142,11 +132,12 @@ public class AttendancePresenter implements AttendanceContract.Presenter {
 
     }
 
-
+    @Override
     public boolean checkLocationServicesStatus() {
         return locationHandler.checkLocationServicesStatus();
     }
 
+    @Override
     public boolean checkLocationPermission() {
         boolean check = false;
         if (permissionsHandler.checkHasPermission(Manifest.permission.ACCESS_FINE_LOCATION)
