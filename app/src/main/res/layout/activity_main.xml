@@ -18,25 +18,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- @TODO : (hee) 테스트용 코드임으로 지워야됨 -->
-    <!--    <fragment-->
-    <!--        android:id="@+id/attendancView"-->
-    <!--        class="com.depromeet.finddepro.main.attendance.AttendanceInfoFragment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/mainTitle"-->
-    <!--        tools:layout_editor_absoluteX="0dp" />-->
-
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_above="@id/navigation"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainTitle" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabMenu"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:layout_constraintBottom_toBottomOf="@+id/view_pager"
-        app:tabIndicatorHeight="0dp" />
+        android:background="?android:attr/windowBackground"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

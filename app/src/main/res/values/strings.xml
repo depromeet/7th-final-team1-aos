@@ -17,7 +17,8 @@
     <string name="voteTitle">투표</string>
 
     <!--게시판-->
-    <string name="builtinBoardTitle">게시판</string>
+    <string name="feedTitle">게시판</string>
 
-
+    <!--설정-->
+    <string name="settingTitle">게시판</string>
 </resources>
