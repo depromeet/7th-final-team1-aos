@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.depromeet.finddepro.R;
 import com.depromeet.finddepro.data.Choice;
@@ -24,7 +25,7 @@ import butterknife.Unbinder;
 public class VotesFragment extends Fragment implements ChoiceContainerView.OnClickEventListener {
 
     @BindView(R.id.f_votes_rv)
-    ChoiceContainerView cv;
+    RecyclerView rvVotes;
     private Unbinder unbinder;
 
     @Nullable
@@ -45,8 +46,8 @@ public class VotesFragment extends Fragment implements ChoiceContainerView.OnCli
         dummyChoice.add(new Choice("3", "3번째 선택지", true, 5, new ArrayList<>()));
         dummyChoice.add(new Choice("4", "4번째 선택지", false, 6, new ArrayList<>()));
         dummyChoice.add(new Choice("5", "5번째 선택지", true, 7, new ArrayList<>()));
-        cv.setChoiceList(dummyChoice);
-        cv.setListener(this);
+//        rvVotes.setChoiceList(dummyChoice);
+//        rvVotes.setListener(this);
     }
 
     @Override
