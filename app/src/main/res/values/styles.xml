@@ -10,4 +10,167 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="H1CenterGray900">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineSpacingExtra">0sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="H2LeftGray900">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">9sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="MiscDisabledTxtL">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">9sp</item>
+        <item name="android:textColor">@color/light_blue_grey</item>
+    </style>
+
+    <style name="H2CenterGray900">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">9sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="BtnMGray900">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">-2sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="BtnMGray800">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">-2sp</item>
+        <item name="android:textColor">@color/charcoal_grey</item>
+    </style>
+
+    <style name="H3CenterGray900">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="H3LeftGray900">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="H3RightGray900">
+        <item name="android:gravity">end</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="MiscDisabledTxtM">
+        <item name="android:gravity">end</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">@color/light_blue_grey</item>
+    </style>
+
+    <style name="MiscPlaceholderLeft1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:textColor">@color/light_blue_grey</item>
+    </style>
+
+    <style name="MiscPlaceholderLeft2">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:textColor">@color/light_blue_grey</item>
+    </style>
+
+    <style name="BtnSGray502">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textColor">@color/pale_grey</item>
+    </style>
+
+    <style name="P1LeftGray900">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="BtnSGray50">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textColor">@color/pale_grey</item>
+    </style>
+
+    <style name="P1LeftPrimary500">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+
+    <style name="MiscDisabledBtnSRight">
+        <item name="android:gravity">end</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textColor">@color/light_blue_grey</item>
+    </style>
+
+    <style name="BtnSGray600">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textColor">@color/blue_grey</item>
+    </style>
+
+    <style name="BtnSGray800">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textColor">@color/charcoal_grey</item>
+    </style>
+
+
+    <style name="P1LeftGray800">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:textColor">@color/charcoal_grey</item>
+    </style>
+
+
+    <style name="MiscDisabledTxtXs">
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">0sp</item>
+        <item name="android:textColor">@color/light_blue_grey</item>
+    </style>
+
+    <style name="CaptionRightGray600">
+        <item name="android:gravity">end</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">0sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="CaptionCenterGray50">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/pale_grey</item>
+    </style>
+
+    <style name="CaptionCenterGray600">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">0sp</item>
+        <item name="android:textColor">@color/blue_grey</item>
+    </style>
+
+
+    <style name="CaptionLeftGray600">
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">0sp</item>
+        <item name="android:textColor">@color/blue_grey</item>
+    </style>
 </resources>
