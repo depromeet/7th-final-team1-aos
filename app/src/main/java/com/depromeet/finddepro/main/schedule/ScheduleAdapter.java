@@ -42,10 +42,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case ITEM_MORE_LOADING:
-                return new LoadingViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, null, false));
+                return new LoadingViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false));
             case ITEM_SCHEDULE:
             default:
-                return new ScheduleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule, null, false));
+                return new ScheduleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule, parent, false));
 
         }
 
@@ -53,9 +53,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        switch (getItemViewType(position)) {
-            case ITEM_SCHEDULE:
-                ((ScheduleViewHolder) holder).bind(schedules.get(position));
+        if (getItemViewType(position) == ITEM_SCHEDULE) {
+            ((ScheduleViewHolder) holder).bind(schedules.get(position));
         }
     }
 
@@ -69,13 +68,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return schedules.get(position).getId();
     }
 
-    public void add(ArrayList<Schedule> schedules) {
+    void add(ArrayList<Schedule> schedules) {
         this.schedules.addAll(schedules);
         // @TODO : (hee) 갱신 방식 바꿔야 됨
         notifyDataSetChanged();
     }
 
-    public void clear() {
+    void clear() {
         this.schedules.clear();
     }
 
@@ -83,11 +82,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return canMoreLoading;
     }
 
-    public boolean canLoadMore() {
+    boolean canLoadMore() {
         return canMoreLoading;
     }
 
-    public void setCanLoadMore(boolean canMoreLoading) {
+    void setCanLoadMore(boolean canMoreLoading) {
         this.canMoreLoading = canMoreLoading;
         notifyDataSetChanged();
     }
@@ -95,19 +94,29 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //viewholder
     class ScheduleViewHolder extends RecyclerView.ViewHolder {
         private final Unbinder unbinder;
+        @BindView(R.id.item_schedule_tv_week)
+        TextView tvWeek;
         @BindView(R.id.item_schedule_tv_date)
         TextView tvDate;
         @BindView(R.id.item_schedule_tv_content)
         TextView tvContent;
+        @BindView(R.id.item_schedule_v_status)
+        View vStatus;
 
-        public ScheduleViewHolder(@NonNull View itemView) {
+        ScheduleViewHolder(@NonNull View itemView) {
             super(itemView);
             unbinder = ButterKnife.bind(this, itemView);
         }
 
         void bind(Schedule schedule) {
+            tvWeek.setText(schedule.getWeeksStr());
             tvContent.setText(schedule.getContent());
-            tvDate.setText(schedule.getWeeksStr());
+            tvDate.setText(schedule.getDateStr());
+            if (schedule.getItemWeekOfYear() == schedule.getTodayWeekOfYear()) {
+                vStatus.setBackgroundColor(itemView.getResources().getColor(R.color.orange));
+            } else {
+                vStatus.setBackgroundColor(itemView.getResources().getColor(R.color.orange_24));
+            }
         }
 
         public Unbinder getUnbinder() {
@@ -116,7 +125,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class LoadingViewHolder extends RecyclerView.ViewHolder {
-        public LoadingViewHolder(@NonNull View itemView) {
+        LoadingViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
