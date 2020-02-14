@@ -2,6 +2,7 @@ package com.depromeet.finddepro.main;
 
 import com.depromeet.finddepro.main.notice.NoticesFragment;
 import com.depromeet.finddepro.main.schedule.ScheduleFragment;
+import com.depromeet.finddepro.main.setting.SettingFragment;
 
 /*
     Fragments : Fragments load
@@ -10,6 +11,7 @@ import com.depromeet.finddepro.main.schedule.ScheduleFragment;
 class Fragments {
     private static NoticesFragment noticesFragment = null;
     private static ScheduleFragment scheduleFragment = null;
+    private static SettingFragment settingFragment = null;
 
     private Fragments() {
 
@@ -29,6 +31,12 @@ class Fragments {
         return scheduleFragment;
     }
 
+    static SettingFragment getSettingFragment() {
+        if (settingFragment == null)
+            settingFragment = new SettingFragment();
+
+        return settingFragment;
+    }
 
 }
 
