@@ -7,7 +7,6 @@ import com.depromeet.finddepro.data.User;
 import com.depromeet.finddepro.data.Vote;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FakeVotesDataSource implements VotesDataSource {
 
@@ -46,7 +45,7 @@ public class FakeVotesDataSource implements VotesDataSource {
     }
 
     @Override
-    public void getVoteList(long lastItemAt, GetVoteListCallback callback) {
+    public void getVoteList(long lastItemAt, int votePerPage, GetVoteListCallback callback) {
         handler.postDelayed(() -> {
             int firstIdx = lastItemAt == 0 ? 0 : getVoteId(lastItemAt) + 1;
             int perPage = 5;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface VotesDataSource {
 
-    void getVoteList(long lastItemAt, GetVoteListCallback callback);
+    void getVoteList(long lastItemAt, int votePerPage, GetVoteListCallback callback);
 
     interface GetVoteListCallback {
 

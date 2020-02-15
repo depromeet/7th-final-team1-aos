@@ -12,9 +12,17 @@ public interface VotesContract {
 
 		void setLoadingIndicator(boolean active);
 
-		void setVoteList(ArrayList<Vote> voteList);
+		void setRefreshing(boolean isRefreshing);
+
+		void setCanLoadMore(boolean canLoadMore);
+
+		void showNoNotices();
 
 		void showToast(String msg);
+
+		void addVotes(ArrayList<Vote> voteList);
+
+		void showNotices(ArrayList<Vote> voteList);
 	}
 
 	interface Presenter {

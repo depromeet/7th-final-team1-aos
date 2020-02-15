@@ -24,10 +24,24 @@ import butterknife.Unbinder;
 
 public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.VoteViewHolder> {
 
+    private static final int ITEM_MORE_LOADING = 0;
+    private static final int ITEM_NOTICE = 1;
+
     private List<Vote> votes;
+    private boolean canMoreLoading;
 
     public VotesAdapter() {
         votes = new ArrayList<>();
+        canMoreLoading = false;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (hasLoadingItem() && position == getItemCount() - 1) {
+            return ITEM_MORE_LOADING;
+        } else {
+            return ITEM_NOTICE;
+        }
     }
 
     public void setVotes(List<Vote> votes) {
@@ -50,6 +64,23 @@ public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.VoteViewHold
     @Override
     public void onBindViewHolder(@NonNull VoteViewHolder holder, int position) {
         holder.bind(votes.get(position));
+    }
+
+    void clear() {
+        this.votes.clear();
+    }
+
+    private boolean hasLoadingItem() {
+        return canMoreLoading;
+    }
+
+    public boolean canLoadMore() {
+        return canMoreLoading;
+    }
+
+    public void setCanLoadMore(boolean canMoreLoading) {
+        this.canMoreLoading = canMoreLoading;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -104,6 +135,13 @@ public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.VoteViewHold
                 }
             });
 
+        }
+    }
+
+    class LoadingViewHolder extends RecyclerView.ViewHolder {
+
+        LoadingViewHolder(@NonNull View itemView) {
+            super(itemView);
         }
     }
 
