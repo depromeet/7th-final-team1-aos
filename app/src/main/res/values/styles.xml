@@ -173,4 +173,5 @@
         <item name="android:lineSpacingExtra">0sp</item>
         <item name="android:textColor">@color/blue_grey</item>
     </style>
+
 </resources>

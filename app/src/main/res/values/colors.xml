@@ -16,7 +16,8 @@
     <color name="light_blue_grey">#ced4da</color>
     <color name="very_light_blue">#e9ecef</color>
     <color name="pale_grey">#f1f3f5</color>
-    <color name="pale_gray_background">#fcfdff</color>
+    <color name="pale_grey_background">#fcfdff</color>
     <color name="dark_grey_blue">#305e66</color>
     <color name="reddish_brown_32">#51792f08</color>
+
 </resources>
