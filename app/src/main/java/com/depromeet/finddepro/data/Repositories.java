@@ -3,6 +3,7 @@ package com.depromeet.finddepro.data;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import com.depromeet.finddepro.data.source.AttendanceDataSource;
 import com.depromeet.finddepro.data.source.NoticesDataSource;
 import com.depromeet.finddepro.data.source.SchedulesDataSource;
 import com.depromeet.finddepro.data.source.VotesDataSource;

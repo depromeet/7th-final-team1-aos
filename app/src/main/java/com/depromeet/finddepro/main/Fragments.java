@@ -1,8 +1,11 @@
 package com.depromeet.finddepro.main;
 
+import androidx.fragment.app.Fragment;
+
 import com.depromeet.finddepro.main.attendance.AttendanceFragment;
 import com.depromeet.finddepro.main.notice.NoticesFragment;
 import com.depromeet.finddepro.main.schedule.ScheduleFragment;
+import com.depromeet.finddepro.main.vote.VotesFragment;
 
 /*
     Fragments : Fragments load
@@ -12,6 +15,7 @@ class Fragments {
     private static NoticesFragment noticesFragment = null;
     private static ScheduleFragment scheduleFragment = null;
     private static AttendanceFragment attendanceFragment = null;
+    private static VotesFragment votesFragment = null;
 
     private Fragments() {
 
@@ -38,4 +42,10 @@ class Fragments {
         return attendanceFragment;
     }
 
+    static Fragment getVotesFragment() {
+        if (votesFragment == null)
+            votesFragment = new VotesFragment();
+
+        return votesFragment;
+    }
 }
