@@ -18,6 +18,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- @TODO : (hee) 테스트용 코드임으로 지워야됨 -->
+    <!--    <fragment-->
+    <!--        android:id="@+id/attendancView"-->
+    <!--        class="com.depromeet.finddepro.main.attendance.AttendanceInfoFragment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/mainTitle"-->
+    <!--        tools:layout_editor_absoluteX="0dp" />-->
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -41,4 +50,3 @@
         app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

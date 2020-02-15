@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <layer-list>
+            <!-- shadow (밑으로) : 그림자 -->
+            <item android:top="2dp">
+                <shape>
+                    <corners android:radius="2dp" />
+                    <solid android:color="@color/reddish_brown_32" />
+                </shape>
+            </item>
+            <!-- background (위로) -->
+            <item android:bottom="2dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/orange" />
+                    <corners android:bottomLeftRadius="2dp" android:bottomRightRadius="2dp" android:topLeftRadius="2dp" android:topRightRadius="2dp" />
+
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>
