@@ -18,6 +18,7 @@ public class Repositories {
     private static NoticesRepository noticesRepository = null;
     private static SchedulesRepository schedulesRepository = null;
     private static VotesRepository votesRepository = null;
+    private static AttendanceRepository attendanceRepository = null;
 
     public static NoticesRepository getNoticesRepoInstance(@NonNull NoticesDataSource noticesDataSource) {
         checkNotNull(noticesDataSource);
@@ -57,6 +58,22 @@ public class Repositories {
         }
 
         return votesRepository;
+    }
+
+
+    public static AttendanceRepository getAttendanceInfoInstance(@NonNull AttendanceDataSource attendanceInfoDataSource) {
+        checkNotNull(attendanceInfoDataSource);
+
+        if (attendanceRepository == null) {
+            attendanceRepository = new InMemoryAttendanceRepository(attendanceInfoDataSource);
+        }
+        return attendanceRepository;
+    }
+
+
+    @VisibleForTesting
+    public static AttendanceRepository getAttendanceInfoInstance() {
+        return attendanceRepository;
     }
 
 }

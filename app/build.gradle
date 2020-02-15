@@ -104,6 +104,11 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test:rules:$rootProject.rulesVersion"
+
+    //qr코드
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+
 }
 
 /*
