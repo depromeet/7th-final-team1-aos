@@ -112,10 +112,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tvWeek.setText(schedule.getWeeksStr());
             tvContent.setText(schedule.getContent());
             tvDate.setText(schedule.getDateStr());
-            if (schedule.getItemWeekOfYear() == schedule.getTodayWeekOfYear()) {
-                vStatus.setBackgroundColor(itemView.getResources().getColor(R.color.orange));
-            } else {
+            if (schedule.getItemWeekOfYear() < schedule.getTodayWeekOfYear()) {
                 vStatus.setBackgroundColor(itemView.getResources().getColor(R.color.orange_24));
+            } else if (schedule.getItemWeekOfYear() > schedule.getTodayWeekOfYear()) {
+                vStatus.setBackgroundColor(itemView.getResources().getColor(R.color.orange_56));
+            } else {
+                vStatus.setBackgroundColor(itemView.getResources().getColor(R.color.orange));
             }
         }
 

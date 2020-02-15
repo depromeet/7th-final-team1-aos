@@ -20,7 +20,7 @@ public class FakeSchedulesDataSource implements SchedulesDataSource {
     private void initDummySchedules(int cnt) {
         fakeScheduleList = new ArrayList<>();
         for (int i = 1; i <= cnt; i++) {
-            long day = System.currentTimeMillis() + (long) (1000 * 60 * 60 * 24) * (i - 1); // long 형의 현재시간
+            long day = System.currentTimeMillis() + (long) (1000 * 60 * 60 * 24) * (i - 10); // long 형의 현재시간
 
             fakeScheduleList.add(new Schedule(i, i, day, i + "일정내용입니다.\n내용이 많을 때?"));
         }

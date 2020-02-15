@@ -10,5 +10,6 @@
     <color name="orange">#ff760c</color>
     <color name="pale_gray_background">#fcfdff</color>
     <color name="orange_24">#3dff760c</color>
+    <color name="orange_56">#8fff760c</color>
 
 </resources>
