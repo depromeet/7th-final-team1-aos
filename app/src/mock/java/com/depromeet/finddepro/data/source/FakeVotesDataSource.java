@@ -33,7 +33,7 @@ public class FakeVotesDataSource implements VotesDataSource {
             Vote vote = new Vote(i,
                     i + "번째 투표",
                     i + "번째 점심 뭐 먹으러 갈래?",
-                    new User(String.valueOf(1), "관리자", ""),
+                    new User(String.valueOf(1), "관리자", "https://lh3.googleusercontent.com/proxy/MPFjmpmkUlTuEHGwbNBmcwMNTMp-lvEeqCyNHoi3tC3byLJEkk9963m25Av2Y-od2g8Zb9CKxje7kdRPECYp-aWR4tKVE6gzdOwuu9hAXN-wqI1nFu4F9U9GI5VfgA"),
                     dummyChoice,
                     3,
                     5,
@@ -47,13 +47,23 @@ public class FakeVotesDataSource implements VotesDataSource {
 
     @Override
     public void getVoteList(long lastItemAt, GetVoteListCallback callback) {
-//        handler.postDelayed(() -> {
-//            int firstIdx = idx == 0 ? 0 : idx + 1;
-//
-//            int lastIdx = firstIdx + perPage >= fakeVoteList.size() ?
-//                    fakeVoteList.size() :
-//                    firstIdx + perPage;
-//            callback.onSuccess(new ArrayList<>(fakeVoteList.subList(firstIdx, lastIdx)));
-//        }, DELAY_TIME);
+        handler.postDelayed(() -> {
+            int firstIdx = lastItemAt == 0 ? 0 : getVoteId(lastItemAt) + 1;
+            int perPage = 5;
+
+            int lastIdx = firstIdx + perPage >= fakeVoteList.size() ?
+                    fakeVoteList.size() :
+                    firstIdx + perPage;
+            callback.onSuccess(new ArrayList<>(fakeVoteList.subList(firstIdx, lastIdx)));
+        }, DELAY_TIME);
+    }
+
+    private int getVoteId(long createdAt) {
+        for (int i = 0; i < fakeVoteList.size(); i++) {
+            if (fakeVoteList.get(i).getCreatedAt() == createdAt) {
+                return i;
+            }
+        }
+        return fakeVoteList.size();
     }
 }

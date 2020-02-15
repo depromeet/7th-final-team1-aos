@@ -10,4 +10,16 @@ public class User {
 		this.name = name;
 		this.profileUrl = profileUrl;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getProfileUrl() {
+		return profileUrl;
+	}
 }

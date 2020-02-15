@@ -10,4 +10,8 @@ class InMemoryVotesRepository implements VotesRepository {
     }
 
 
+    @Override
+    public void loadVotes(VotesDataSource.GetVoteListCallback callback) {
+        votesDataSource.getVoteList(0L, callback);
+    }
 }
