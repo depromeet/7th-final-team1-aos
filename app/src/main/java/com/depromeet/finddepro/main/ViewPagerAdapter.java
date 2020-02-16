@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int PAGE_NUMBER = 4;
+    private static final int PAGE_NUMBER = 5;
 
     ViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -18,21 +18,27 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        //@TODO (hee : fragments 구현 후 수정하기, 현재 테스트 용
+        //@TODO (hee : fragments 구현 후 수정하기, 현재 테스트 용)
         switch (position) {
             case 0: {
-                return Fragments.getNoticesFragment();
+                //공지사항, 일정 합치기
+                return Fragments.getScheduleFragment();
             }
             case 1: {
-                return Fragments.getScheduleFragment();
-
+                //출석체
+                return Fragments.getAttendanceFragment();
             }
             case 2: {
-               return Fragments.getAttendanceFragment();
-
+                //투표
+                return new Fragment();
             }
-            case 3:
+            case 3: {
+                //게시판
+                return new Fragment();
+            }
+            case 4:
             default: {
+                //설정
                 return Fragments.getSettingFragment();
 
             }
