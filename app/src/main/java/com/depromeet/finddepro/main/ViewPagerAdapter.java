@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int PAGE_NUMBER = 3;
+    private static final int PAGE_NUMBER = 4;
 
     ViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -27,17 +27,13 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 return Fragments.getScheduleFragment();
 
             }
-//            case 2: {
-//               return Fragments.getNoticesFragment();
-//
-//            }
-//            case 3: {
-//           return Fragments.getNoticesFragment();
-//
-//            }
-            case 2:
+            case 2: {
+               return Fragments.getAttendanceFragment();
+
+            }
+            case 3:
             default: {
-                return Fragments.getAttendanceFragment();
+                return Fragments.getSettingFragment();
 
             }
         }
