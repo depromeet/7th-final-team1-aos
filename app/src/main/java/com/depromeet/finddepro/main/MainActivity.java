@@ -83,45 +83,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*
-    @BindView(R.id.bottomMenu)
-    TabLayout tab;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-    @BindView(R.id.mainTitle)
-    TextView title;
-    private Unbinder unbinder;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        unbinder = ButterKnife.bind(this);
-
-        // 탭 생성 및 적용
-        ViewPagerAdapter tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(tabPagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                viewPager.setCurrentItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-
-        tab.setupWithViewPager(viewPager);
-
-    }
-*/
-
 }

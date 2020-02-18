@@ -5,33 +5,33 @@
     <item
         android:id="@+id/navigation_home"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/menu_selector_home"
         android:title="@string/homeTitle"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/navigation_attendance"
         android:enabled="true"
-        android:icon="@drawable/ic_check"
+        android:icon="@drawable/menu_selector_attendance"
         android:title="@string/attendanceTitle"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/navigation_vote"
         android:enabled="true"
-        android:icon="@drawable/ic_vote"
+        android:icon="@drawable/menu_selector_vote"
         android:title="@string/voteTitle"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/navigation_feed"
         android:enabled="true"
-        android:icon="@drawable/ic_feed"
+        android:icon="@drawable/menu_selector_feed"
         android:title="@string/feedTitle"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/navigation_setting"
         android:enabled="true"
-        android:icon="@drawable/ic_setting"
+        android:icon="@drawable/menu_selector_setting"
         android:title="@string/settingTitle"
         app:showAsAction="ifRoom" />
 </menu>
