@@ -3,6 +3,8 @@
 
     <!--홈-->
     <string name="homeTitle">홈</string>
+    <string name="noticeTitle">공지사항</string>
+    <string name="scheduleTitle">일정</string>
 
 
     <!--출석-->

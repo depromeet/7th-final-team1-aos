@@ -2,7 +2,6 @@ package com.depromeet.finddepro.main;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navigationMenu;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @BindView(R.id.mainTitle)
-    TextView title;
+    //@BindView(R.id.mainTitle)
+    //TextView title;
 
 
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {

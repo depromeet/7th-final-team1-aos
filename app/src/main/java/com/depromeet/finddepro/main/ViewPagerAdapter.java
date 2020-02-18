@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.depromeet.finddepro.main.home.HomeFragment;
+
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -22,7 +24,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0: {
                 //공지사항, 일정 합치기
-                return Fragments.getScheduleFragment();
+                return new HomeFragment();
             }
             case 1: {
                 //출석체
