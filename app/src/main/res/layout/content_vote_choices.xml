@@ -9,36 +9,44 @@
         android:id="@+id/item_vote_tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/dark_grey"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        tools:ignore="SpUsage"
         tools:text="오늘 뭐 먹으러 가지?" />
 
     <TextView
         android:id="@+id/item_vote_tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/charcoal_grey"
+        android:textSize="15dp"
+        tools:ignore="SpUsage"
         tools:text="다 같이 맛있는거 먹으러 가요.\n메뉴는 뭐가 좋을까요?" />
 
     <TextView
         android:id="@+id/item_vote_tv_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="16dp"
         tools:text="2020년 1월 1일까지 | 복수허용" />
 
     <com.depromeet.finddepro.main.vote.custom.ChoiceContainerView
         android:id="@+id/item_vote_choice_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical" />
 
     <LinearLayout
@@ -47,16 +55,22 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/item_vote_btn_choice_complete"
+            android:id="@+id/item_vote_btn_vote"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/vote_btn_bg" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/item_vote_btn_quit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/vote_btn_bg" />
 
     </LinearLayout>
 

@@ -20,7 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.VoteViewHolder> {
 
@@ -111,8 +110,8 @@ public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.VoteViewHold
         @BindView(R.id.item_vote_choice_container)
         ChoiceContainerView ccv;
 
-        @BindView(R.id.item_vote_btn_choice_complete)
-        Button btnChoiceComplete;
+        @BindView(R.id.item_vote_btn_vote)
+        Button btnVote;
 
         VoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -128,7 +127,7 @@ public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.VoteViewHold
             tvContent.setText(vote.getContent());
             tvOptions.setText(vote.getOptionStr());
             ccv.setChoiceList(vote.getChoices());
-            btnChoiceComplete.setOnClickListener(new View.OnClickListener() {
+            btnVote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // @TODO : (jonghyo) 선택했음을 알려줘야 됨

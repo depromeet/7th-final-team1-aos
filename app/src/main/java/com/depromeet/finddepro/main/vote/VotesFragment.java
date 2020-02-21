@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class VotesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ChoiceContainerView.OnClickEventListener, VotesContract.View {
@@ -35,6 +37,13 @@ public class VotesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 	ProgressBar pb;
 	@BindView(R.id.f_votes_srl)
 	SwipeRefreshLayout srlVotes;
+
+	@BindView(R.id.f_votes_tv_now)
+	TextView mTvNow;
+	@BindView(R.id.f_votes_tv_end)
+	TextView mTvEnd;
+	@BindView(R.id.f_votes_tv_all)
+	TextView mTvAll;
 
 	private Unbinder unbinder;
 
@@ -81,6 +90,7 @@ public class VotesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		presenter.start();
+		mTvNow.setSelected(true);
 	}
 
 	@Override
@@ -92,6 +102,27 @@ public class VotesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
 		unbinder.unbind();
 		unbinder = null;
+	}
+
+	@OnClick({R.id.f_votes_tv_now})
+	public void onClickNow() {
+		mTvNow.setSelected(true);
+		mTvEnd.setSelected(false);
+		mTvAll.setSelected(false);
+	}
+
+	@OnClick({R.id.f_votes_tv_end})
+	public void onClickEnd() {
+		mTvNow.setSelected(false);
+		mTvEnd.setSelected(true);
+		mTvAll.setSelected(false);
+	}
+
+	@OnClick({R.id.f_votes_tv_all})
+	public void onClickAll() {
+		mTvNow.setSelected(false);
+		mTvEnd.setSelected(false);
+		mTvAll.setSelected(true);
 	}
 
 	@Override

@@ -11,22 +11,26 @@
 
     <TextView
         android:id="@+id/item_vote_tv_creator_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/item_vote_iv_creator_profile"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/item_vote_iv_creator_profile"
-        tools:ignore="RtlHardcoded"
+        android:textColor="@color/dark_grey"
+        android:textSize="15dp"
+        tools:ignore="RtlHardcoded,SpUsage"
         tools:text="관리자" />
 
     <TextView
         android:id="@+id/item_vote_tv_created_at"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/item_vote_iv_creator_profile"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/item_vote_iv_creator_profile"
-        tools:ignore="RtlHardcoded"
+        android:textColor="#888888"
+        android:textSize="13dp"
+        tools:ignore="RtlHardcoded,SpUsage"
         tools:text="2020년 12월 31일 17:20" />
 
     <ImageView
@@ -43,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/item_vote_iv_creator_profile"
         android:layout_alignParentRight="true"
+        android:visibility="gone"
         tools:ignore="RtlHardcoded"
         tools:text="82" />
 
