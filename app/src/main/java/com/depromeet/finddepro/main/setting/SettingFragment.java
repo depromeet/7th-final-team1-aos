@@ -23,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 public class SettingFragment extends Fragment implements SettingContract.View {
@@ -71,16 +70,13 @@ public class SettingFragment extends Fragment implements SettingContract.View {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode != RESULT_OK) {
+            return;
+        }
         if (requestCode == GET_GALLERY_IMAGE) {
-            if (resultCode == RESULT_OK) {
-
-                String imgPath = data.getData().toString();
-                showUserProfileImg(imgPath);
-                presenter.changeProfileImg(imgPath);
-
-            } else if (resultCode == RESULT_CANCELED) {
-                //showToast("사진 선택 취소");
-            }
+            String imgPath = data.getData().toString();
+            showUserProfileImg(imgPath);
+            presenter.changeProfileImg(imgPath);
         }
     }
 
@@ -99,8 +95,13 @@ public class SettingFragment extends Fragment implements SettingContract.View {
 
     @Override
     public void showUserProfileImg(String img) {
-        //TODO hee: GlideApp으로 바꾸기 + 글라이드 밖으로 안 보이게
-        Glide.with(this).load(img).apply(new RequestOptions().circleCrop()).into(profile);
+        //TODO hee: 글라이드 밖으로 안 보이게
+        if (img.length() > 0) {
+            Glide.with(this).load(img).apply(new RequestOptions().circleCrop()).into(profile);
+        } else {
+            Glide.with(this).load(R.drawable.ic_user_profile).apply(new RequestOptions().circleCrop()).into(profile);
+        }
+
     }
 
 
