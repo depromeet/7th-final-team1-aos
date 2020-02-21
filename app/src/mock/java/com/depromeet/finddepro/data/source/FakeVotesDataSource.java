@@ -32,7 +32,7 @@ public class FakeVotesDataSource implements VotesDataSource {
             Vote vote = new Vote(i,
                     i + "번째 투표",
                     i + "번째 점심 뭐 먹으러 갈래?",
-                    new User(String.valueOf(1), "관리자", "https://lh3.googleusercontent.com/proxy/MPFjmpmkUlTuEHGwbNBmcwMNTMp-lvEeqCyNHoi3tC3byLJEkk9963m25Av2Y-od2g8Zb9CKxje7kdRPECYp-aWR4tKVE6gzdOwuu9hAXN-wqI1nFu4F9U9GI5VfgA"),
+                    new User(String.valueOf(1), "관리자", "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"),
                     dummyChoice,
                     3,
                     5,
@@ -55,6 +55,26 @@ public class FakeVotesDataSource implements VotesDataSource {
                     firstIdx + perPage;
             callback.onSuccess(new ArrayList<>(fakeVoteList.subList(firstIdx, lastIdx)));
         }, DELAY_TIME);
+    }
+
+    @Override
+    public void addVote(Vote vote, CommonCallback callback) {
+
+    }
+
+    @Override
+    public void updateVote(Vote vote, CommonCallback callback) {
+
+    }
+
+    @Override
+    public void updateChoiceSelection(Vote vote, CommonCallback callback) {
+
+    }
+
+    @Override
+    public void deleteVote(int voteId, CommonCallback callback) {
+
     }
 
     private int getVoteId(long createdAt) {

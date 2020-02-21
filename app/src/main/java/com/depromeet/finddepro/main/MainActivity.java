@@ -2,7 +2,6 @@ package com.depromeet.finddepro.main;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +20,10 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navigationMenu;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @BindView(R.id.mainTitle)
-    TextView title;
+    //@BindView(R.id.mainTitle)
+    //TextView title;
+
+
     BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
 
+        navigationMenu.setItemIconTintList(null);
+
         // 탭 생성 및 적용
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
@@ -78,46 +81,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    /*
-    @BindView(R.id.bottomMenu)
-    TabLayout tab;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-    @BindView(R.id.mainTitle)
-    TextView title;
-    private Unbinder unbinder;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        unbinder = ButterKnife.bind(this);
-
-        // 탭 생성 및 적용
-        ViewPagerAdapter tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(tabPagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                viewPager.setCurrentItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-
-        tab.setupWithViewPager(viewPager);
-
-    }
-*/
 
 }

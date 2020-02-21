@@ -3,6 +3,8 @@
 
     <!--홈-->
     <string name="homeTitle">홈</string>
+    <string name="noticeTitle">공지사항</string>
+    <string name="scheduleTitle">일정</string>
 
 
     <!--출석-->
@@ -17,8 +19,13 @@
     <string name="voteTitle">투표</string>
 
     <!--게시판-->
-    <string name="feedTitle">게시판</string>
+    <string name="feedTitle">피드</string>
 
     <!--설정-->
-    <string name="settingTitle">게시판</string>
+    <string name="settingTitle">설정</string>
+    <string name="settingPushAlarmStr">푸쉬 알림</string>
+    <string name="settingLikeStr">좋아요한 게시글</string>
+    <string name="settingProgramInfoStr">프로그램 정보</string>
+    <string name="settingWithdrawalStr">회원 탈퇴</string>
+
 </resources>

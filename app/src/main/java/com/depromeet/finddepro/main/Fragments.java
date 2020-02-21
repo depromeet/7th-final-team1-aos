@@ -1,34 +1,34 @@
 package com.depromeet.finddepro.main;
 
-import androidx.fragment.app.Fragment;
-
 import com.depromeet.finddepro.main.attendance.AttendanceFragment;
 import com.depromeet.finddepro.main.notice.NoticesFragment;
 import com.depromeet.finddepro.main.schedule.ScheduleFragment;
 import com.depromeet.finddepro.main.vote.VotesFragment;
+import com.depromeet.finddepro.main.setting.SettingFragment;
 
 /*
     Fragments : Fragments load
 
  */
-class Fragments {
+public class Fragments {
     private static NoticesFragment noticesFragment = null;
     private static ScheduleFragment scheduleFragment = null;
     private static AttendanceFragment attendanceFragment = null;
     private static VotesFragment votesFragment = null;
+    private static SettingFragment settingFragment = null;
 
     private Fragments() {
 
     }
 
-    static NoticesFragment getNoticesFragment() {
+    public static NoticesFragment getNoticesFragment() {
         if (noticesFragment == null)
             noticesFragment = new NoticesFragment();
 
         return noticesFragment;
     }
 
-    static ScheduleFragment getScheduleFragment() {
+    public static ScheduleFragment getScheduleFragment() {
         if (scheduleFragment == null)
             scheduleFragment = new ScheduleFragment();
 
@@ -38,14 +38,20 @@ class Fragments {
     static AttendanceFragment getAttendanceFragment() {
         if (attendanceFragment == null)
             attendanceFragment = new AttendanceFragment();
-
         return attendanceFragment;
     }
 
-    static Fragment getVotesFragment() {
+    static VotesFragment getVotesFragment() {
         if (votesFragment == null)
             votesFragment = new VotesFragment();
 
         return votesFragment;
     }
+    static SettingFragment getSettingFragment() {
+        if (settingFragment == null)
+            settingFragment = new SettingFragment();
+
+        return settingFragment;
+    }
+
 }
